@@ -25,10 +25,10 @@ published: true
 # 指定しない場合は停止します。
 
 # 変数指定
-ServerIP=$2 <span style="color: red; ">#←スペースが入ると期待した結果にならない</span>
+ServerIP=$2 #←スペースが入ると期待した結果にならない
 
 # 第2引数がない場合終了
-if [ -n "$ServerIP" ] ; then <span style="color: red; ">#←""を使わないと期待した結果にならない</span>
+if [ -n "$ServerIP" ] ; then #←""を使わないと期待した結果にならない
     echo -e "\e[31m$1 を実施します。"
 else
     echo -e "\e[31m第2引数にIPアドレスを設定してください。"
