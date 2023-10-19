@@ -14,7 +14,7 @@ windows11が入ってる端末に windows server 2022を構築しようとした
 ## 前提
 - 使用端末：HP Elite SFF 600 G9 Desktop
 - 外付けHDD：BUFFALO HD-PCFS1.0U3-BBA
-- USBメモリ：1000GB
+- USBメモリ：USB FLASH 1000GB
 - CPU：HP Elite SFF 600 G9 Desktop PC
 - BIOS：U01 Ver.02.11.00 07/25/2023
 
@@ -25,7 +25,7 @@ https://pc-karuma.net/enter-uefi-bios-on-windows-11-pc/
 →再起動するとマウント外れるためダメ
 
 ## ダメだった案2
-1. ISOをUSBかHDDに書き込む(3時間くらいかかったので次回はUSBメモリで)
+1. ISOをHDDに書き込む(3時間くらいかかったのでUSBメモリ推奨)
 https://techlive.tokyo/archives/10783
 
 2. BIOSを開くため再起動
@@ -33,14 +33,14 @@ https://pc-karuma.net/enter-uefi-bios-on-windows-11-pc/
 
 3. BIOS 動いたら以下の順で選択
 Boot Menu → ISOを書き込んだ機器名 → Continue Boot
-・起動順をUSBを先にしてもダメ
+・BIOSから起動順をいじってHDDを一番先にしてもダメ
 ・容量が使用されてないので本当に書き込まれているのか微妙
 ・手でISOファイルを入れるもダメ
 
 いろんな記事を見たけどみんなUSBメモリでやってるのでUSBメモリ使ってリベンジ
 
 ## ダメだった案3
-1. ISOをUSBかUSBメモリに書き込む(HDDだと3時間くらいかかったのとインストーラーが起動しなかったので使わない)
+1. ISOをUSBメモリに書き込む
 https://techlive.tokyo/archives/10783
 
 2. USB内の setup を起動し以下の設定を選択する
@@ -57,20 +57,20 @@ https://support.microsoft.com/ja-jp/windows/windows-%E3%81%AE%E3%82%A2%E3%83%83%
 再起動後のエラー内容が  Unmountable Boot Volume
 https://www.partitionwizard.jp/clone-disk/unmountable-boot-volume.html
 
-windows11は消していいので回復からリセットして再インストール→ダメ
+windows11は消していいので回復から初期化して再インストール→ダメ
 desktopエクスペリエンスを選択しないといけないっぽい？→ダメ
 https://ameblo.jp/mizuhokuzuhara/entry-12536887629.html
 
 システム ファイルを復元および修復を実施→ダメ
 クリーンブート→ダメ
 
-※起動順を変えるのではなく以下のようにbootオプションでUSBメモリを選択するのが正解
+※exeを実行したり起動順を変えるのではなく以下のようにbootオプションでUSBメモリを選択するのが正解
 
 ## ダメだった案4
-1. ISOをUSBメモリに書き込む(HDDだと3時間くらいかかったのとインストーラーが起動しなかったので使わない)
+1. ISOをUSBメモリに書き込む
 https://techlive.tokyo/archives/10783
 
-2.以下の方法でBIOSを開く
+2. 以下の方法でBIOSを開く
 https://pc-karuma.net/enter-uefi-bios-on-windows-11-pc/
 
 3. F9 bootオプションで1で作成したUSBを選択
@@ -107,11 +107,10 @@ https://answers.microsoft.com/en-us/windows/forum/all/system-image-restore-faile
 →リストアの実施
 →エラー：「windows バックアップで回復したオペレーティングシステムのオペレーティングシステムローダーエントリをブートメニューにインポート出来ませんでした。(0x8078008C)」
 
-バックアップからの復旧は無理そうなのと
 上記のエラーの情報が少ないため1からインストール
 
 ## 成功案
-1. ISOをUSBメモリに書き込む(HDDだと3時間くらいかかったのとインストーラーが起動しなかったので使わない)
+1. ISOをUSBメモリに書き込む
 https://techlive.tokyo/archives/10783
 
 2. 以下の方法でBIOSを開く
@@ -123,15 +122,8 @@ windows server2022をインストールするドライブが見つからない�
 https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q14261094919
 https://sunrise-gifu.com/intel_vmd/
 →BIOSで見当たらない。rstドライバインストールしても無理。
-→Intel optenaからも認識されていない
-
-windowsバックアップからいけるかも
-https://www.truesystems.jp/blog/use-windows-server-2022-backup
-→結局diskが見つからないのでドライブを認識させないとダメ
-
-BIOS 1~10まで確認したけどVMDの設定は VMD用ストレージコントローラーの構成を無効化 以外見当たらない
-
-RAID無効化して再起動
+→Intel optane からも認識されていない
+→Intel optane からRAID無効化して再起動
 →VMD用ストレージコントローラーの構成を無効化
 →inaccessible boot deviceエラー
 https://manumaruscript.com/inaccessible-boot-error/
