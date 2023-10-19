@@ -66,7 +66,7 @@ https://ameblo.jp/mizuhokuzuhara/entry-12536887629.html
 
 ※起動順を変えるのではなく以下のようにbootオプションでUSBメモリを選択するのが正解
 
-## 成功案
+## ダメだった案4
 1. ISOをUSBメモリに書き込む(HDDだと3時間くらいかかったのとインストーラーが起動しなかったので使わない)
 https://techlive.tokyo/archives/10783
 
@@ -100,3 +100,42 @@ https://www.truesystems.jp/blog/use-windows-server-2022-backup
 ※復元の時にwindows11 しか選択出来なかったので要確認
 →ドライブにアクセス出来ずダメだった
 →Bitlockerの暗号化が原因っぽいので無効化してリベンジ
+→リストアの実施
+→エラー：「windows バックアップで回復したオペレーティングシステムのオペレーティングシステムローダーエントリをブートメニューにインポート出来ませんでした。(0x8078008C)」
+https://answers.microsoft.com/en-us/windows/forum/all/system-image-restore-failed-0x8078008c/4eee1405-ba9d-460f-ad0e-9d2cbc9987da
+→windows server 2022のインストールはいけた🎉
+→リストアの実施
+→エラー：「windows バックアップで回復したオペレーティングシステムのオペレーティングシステムローダーエントリをブートメニューにインポート出来ませんでした。(0x8078008C)」
+
+バックアップからの復旧は無理そうなのと
+上記のエラーの情報が少ないため1からインストール
+
+## 成功案
+1. ISOをUSBメモリに書き込む(HDDだと3時間くらいかかったのとインストーラーが起動しなかったので使わない)
+https://techlive.tokyo/archives/10783
+
+2. 以下の方法でBIOSを開く
+https://pc-karuma.net/enter-uefi-bios-on-windows-11-pc/
+
+3. F9 bootオプションで1で作成したUSBを選択
+
+windows server2022をインストールするドライブが見つからないのでVMD用ストレージコントローラーの構成を無効化してみる→ダメ
+https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q14261094919
+https://sunrise-gifu.com/intel_vmd/
+→BIOSで見当たらない。rstドライバインストールしても無理。
+→Intel optenaからも認識されていない
+
+windowsバックアップからいけるかも
+https://www.truesystems.jp/blog/use-windows-server-2022-backup
+→結局diskが見つからないのでドライブを認識させないとダメ
+
+BIOS 1~10まで確認したけどVMDの設定は VMD用ストレージコントローラーの構成を無効化 以外見当たらない
+
+RAID無効化して再起動
+→VMD用ストレージコントローラーの構成を無効化
+→inaccessible boot deviceエラー
+https://manumaruscript.com/inaccessible-boot-error/
+→セーフモードで起動し再起動→inaccessible boot deviceエラーが出なくなった🎉
+
+4. windows server 2022 (デスクトップエクスペリエンス)をインストール
+うまくいった
