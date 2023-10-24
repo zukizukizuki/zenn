@@ -1,6 +1,6 @@
 ---
 title: "WSL上のLinuxのバックアップとリストア"
-emoji: "😒"
+emoji: "🥶"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [linux , wsl, bash , windows]
 published: true
