@@ -2,7 +2,7 @@
 title: "WSL上のLinuxのバックアップとリストア"
 emoji: "😒"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [windows , windows_server, BIOS , backup]
+topics: [linux , wsl, bash , windows]
 published: true
 ---
 
