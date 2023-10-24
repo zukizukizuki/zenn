@@ -1,5 +1,5 @@
 ---
-title: "2ヵ月OSS活動をした結果…"
+title: "dockerを起動/停止する際にシェルを組んだ時の備忘録"
 emoji: "🐱"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [docker , コンテナ, linux , shell]
