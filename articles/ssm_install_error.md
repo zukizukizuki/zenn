@@ -7,9 +7,7 @@ published: true
 ---
 
 ## 概要
-windows server 2022にRDPするためにSSM agentを
-インストールしようと以下のコマンドを実行したところ・・・
-参考：https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/sysman-install-managed-win.html
+windows server 2022にRDPするためにSSM agentを[公式の方法](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/sysman-install-managed-win.html)でインストールしようと以下のコマンドを実行したところ・・・
 
 ```
 $code = "activation-code"
