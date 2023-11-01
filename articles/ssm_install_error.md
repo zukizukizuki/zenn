@@ -1,5 +1,5 @@
 ---
-title: "Get-Content : パス 'C:\\ProgramData\\Amazon\\SSM\\InstanceData\\registration' が存在しないため検出できません。"
+title: "'C:\\ProgramData\\Amazon\\SSM\\InstanceData\\registration'が存在しないため検出できません。"
 emoji: "⭕"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [windows , windows_server, AWS , SSM]
