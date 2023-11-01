@@ -39,9 +39,11 @@ Get-Content : パス 'C:\ProgramData\Amazon\SSM\InstanceData\registration' が�
 
 ## 調査内容
 `Start-Process .\AmazonSSMAgentSetup.exe -ArgumentList @("/q", "/log", "install.log", "CODE=$code", "ID=$id", "REGION=$region") -Wait`
+
 でログを出してるみたいなので$env:TEMPで指定してたtempフォルダ内のログを見てみると
 
 `2023-11-01 12:16:59 ERROR Registration failed due to error registering the instance with AWS SSM. ActivationExpired:`
+
 の記述を確認
 
 どうやらアクティベーションの期限切れの様なので作り直してコマンドを再実行したらいけた
