@@ -32,6 +32,9 @@ published: true
 - デフォルトのインスタンス名
   - コンソールに表示される名前(optional)
 
+6. ポップアップが表示されるので"activation-code" と "activation-id" をメモする。
+　 ※ポップアップ以外では二度と確認出来ないので注意
+
 ### SSM Agentを対象端末にインストールする
 
 公式手順：https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/sysman-install-managed-win.html
