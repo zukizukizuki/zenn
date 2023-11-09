@@ -72,7 +72,7 @@ Get-Service -Name "AmazonSSMAgent"
 エラーが出た場合は以下を参照してください。
 https://zukkie.link/1000-2/#toc2
 
-### RDPの有効にする
+### RDPを有効にする
 
 1. 対象のwindows端末で 設定 > システム > リモートデスクトップ
 2. リモートデスクトップを有効にする
