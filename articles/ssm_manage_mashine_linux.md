@@ -1,6 +1,6 @@
 ---
 title: "AWS SSMを使ってオンプレミスのlinuxを管理する"
-emoji: "⛷️"
+emoji: "🐭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [linux , AWS , ssm]
 published: true
