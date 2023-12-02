@@ -53,7 +53,7 @@ http_proxy=http://hostname:port
 https_proxy=https://hostname:port
 ```
 
-1. 該当するディストリビューションで以下の「項番3」を実行する
+2. 該当するディストリビューションで以下の「項番3」を実行する
 https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/sysman-install-managed-linux.html
 
 ### インスタンス名の変更(必要な場合のみ)
