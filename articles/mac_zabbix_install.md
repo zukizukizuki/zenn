@@ -309,12 +309,12 @@ WebGUIでの設定を行っていきます。
 以下コマンドでownerを変えて解決
 `sudo chown -R _www:_www  /opt/homebrew/var/www/zabbix`
 
-![](\images\140949.png)
+![](https://storage.googleapis.com/zenn-user-upload/ef930f8ec8dc-20231229.png)
 
 zabbix見れるがphpの要件失敗。以下のコマンドで修正していく
 `sudo vim /opt/homebrew/etc/php/8.3/php.ini`
 
-![](\images\141504.png)
+![](https://storage.googleapis.com/zenn-user-upload/a90f12d4a577-20231229.png)
 
 後は設定項目に従い、今まで設定した値を入れていくとzabbixの構築が完了です。
 
