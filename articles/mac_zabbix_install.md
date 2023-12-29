@@ -1,5 +1,5 @@
 ---
-title: "【最新版対応】Macへのzabbix installで苦労した話"
+title: "【Ver6.4対応】Macへのzabbix installで苦労した話"
 emoji: "🍎"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [zabbix , Mac, apache , PHP , postgres]
