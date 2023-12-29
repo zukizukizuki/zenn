@@ -309,12 +309,12 @@ WebGUIでの設定を行っていきます。
 以下コマンドでownerを変えて解決
 `sudo chown -R _www:_www  /opt/homebrew/var/www/zabbix`
 
-![Alt text](<\images\スクリーンショット 2023-12-28 140949.png>)
+![Alt text](\images\スクリーンショット 2023-12-28 140949.png)
 
 zabbix見れるがphpの要件失敗。以下のコマンドで修正していく
 `sudo vim /opt/homebrew/etc/php/8.3/php.ini`
 
-![Alt text](<\images\スクリーンショット 2023-12-28 141504.png>)
+![Alt text](\images\スクリーンショット 2023-12-28 141504.png)
 
 後は設定項目に従い、今まで設定した値を入れていくとzabbixの構築が完了です。
 
