@@ -47,7 +47,7 @@ LANケーブルが繋がっていないとパケットの伝送が出来ませ�
 linuxの場合は`nmcli device`コマンドを使います。
 以下の場合だと`enp4s0`と`eno1`がlinkupしています。
 ```
-ibsen@ibsen-02:~$ nmcli device
+zuki@zuki:~$ nmcli device
 DEVICE           TYPE      STATE            CONNECTION
 enp4s0           ethernet  接続済み         network1
 eno1             ethernet  接続済み         network2
@@ -56,7 +56,7 @@ eno1             ethernet  接続済み         network2
 windowsの場合は`netsh interface ipv4 show interface
 `コマンドを使います。
 ```
-PS C:\Users\cross> netsh interface ipv4 show interface
+PS C:\Users\zuki> netsh interface ipv4 show interface
 
 Idx     Met         MTU          状態                 名前
 ---  ----------  ----------  ------------  ---------------------------
