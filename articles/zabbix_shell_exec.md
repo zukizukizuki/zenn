@@ -2,13 +2,22 @@
 title: "zabbix で監視対象側のshell scriptを実行した結果を取得する方法"
 emoji: "👮"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [zabbix , Mac, apache , PHP , postgres]
+topics: [zabbix , Linux, apache , PHP , postgres]
 published: true
 ---
 
 ## 概要
 zabbixで柔軟な監視をするためにshell scriptを実行してその値を取得したい時がある。
 最終的にshell scriptで取得した値はトリガーにかけてその値によってアラートをあげる事になるが今回はzabbix agent 経由で監視対象サーバ内にあるshell scriptを実行する方法まで説明します。
+
+## 前提
+### zabbix server
+OS : Ubuntu 22.04
+Version : 6.4
+
+### 監視対象
+OS : Ubuntu 22.04
+zabbix-agent2
 
 ## scriptを実行する監視対象側の設定
 1. zabbix agent でscriptを実行出来る様に以下の記述を **/etc/zabbix/zabbix_agent2.conf** に記載する。
