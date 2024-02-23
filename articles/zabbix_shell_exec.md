@@ -1,5 +1,5 @@
 ---
-title: "zabbix で監視対象側のshell scriptを実行した結果を取得する方法"
+title: "zabbix で監視対象側にあるshell scriptの実行結果を取得する方法"
 emoji: "👮"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [zabbix , linux , apache , Bash , ShellScript ]
