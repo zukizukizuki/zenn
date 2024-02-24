@@ -3,6 +3,7 @@ title: "ubuntuにsquidをinstallしてLinuxとブラウザからインターネ�
 emoji: "🪮"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [ubuntu , linux, squid, proxy, apt]
+published: true
 ---
 
 ## 概要
@@ -97,8 +98,8 @@ sudo vim /etc/apt/apt.conf
 ※ファイルがなかったら新規作成する
 
 ```/etc/apt/apt.conf
-Acquire::http::Proxy "http://proxy_server:port";
-Acquire::https::Proxy "http://proxy_server:port";
+Acquire::http::Proxy "http://<SquidサーバーのIP>:3128";
+Acquire::https::Proxy "http://<SquidサーバーのIP>:3128";
 ```
 
 これで、LinuxマシンおよびブラウザからSquidを経由してインターネットにアクセスする準備が整いました。
