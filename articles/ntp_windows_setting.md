@@ -2,7 +2,7 @@
 title: "windows server をNTPサーバとしてLinuxとWindowsでそのサーバを参照し時刻同期する"
 emoji: "🕰️"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [zabbix , Mac, apache , PHP , postgres]
+topics: [windows , ntp, w32time , linux]
 published: true
 ---
 
