@@ -105,6 +105,30 @@ Acquire::https::Proxy "http://<SquidサーバーのIP>:3128";
 これで、LinuxマシンおよびブラウザからSquidを経由してインターネットにアクセスする準備が整いました。
 実際にapt installやブラウザでのインターネットアクセスが出来るはずです。
 
+### dockerの設定
+
+**systemctl edit docker**　で設定ファイルを開いて以下を追記する
+
+```/etc/systemd/system/docker.service.d/override.conf
+[Service]
+Environment = 'http_proxy=http://192.168.0.10:8080' 'https_proxy=http://192.168.0.10:8080' # 必要なら 'no_proxy=...'
+```
+
+**~/.docker/config.json** を以下の様に編集する。なければ作る。
+
+```~/.docker/config.json
+{
+  "proxies": {
+    "default": {
+      "httpProxy": "http://192.168.0.10:8080",
+      "httpsProxy": "http://192.168.0.10:8080"
+    }
+  }
+}
+```
+
+参考：https://qiita.com/dkoide/items/ca1f4549dc426eaf3735
+
 ## 結論
 UbuntuにSquidをインストールして設定し、Linuxマシンおよびブラウザからインターネットにアクセスする方法を解説しました。
 Squidのようなproxyを使うことで、ネットワーク内の通信を効率的に管理し、セキュリティを向上させることができます。
