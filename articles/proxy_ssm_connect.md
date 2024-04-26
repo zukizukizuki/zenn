@@ -13,7 +13,7 @@ published: true
 
 snapを使ってAWS SSM agentをインストールしたので[公式ドキュメント](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/configure-proxy-ssm-agent.html)にある通り
 
-1. `sudo systemctl edit snap.amazon-ssm-agent.amazon-ssm-agent` で使うproxyサーバ等を環境変数として指定
+1. `sudo systemctl edit snap.amazon-ssm-agent.amazon-ssm-agent` でproxyサーバ等を環境変数として指定
 2. `sudo systemctl daemon-reload && sudo systemctl restart snap.amazon-ssm-agent.amazon-ssm-agent` で再起動
 
 すればいいはずが以下のエラーが出て上手くいかない
@@ -57,7 +57,7 @@ After=snap-amazon\x2dssm\x2dagent-7628.mount network.target snapd.apparmor.servi
 X-Snappy=yes
 
 [Service]
-**EnvironmentFile=-/etc/environment**
+EnvironmentFile=-/etc/environment
 ExecStart=/usr/bin/snap run amazon-ssm-agent
 SyslogIdentifier=amazon-ssm-agent.amazon-ssm-agent
 Restart=always
