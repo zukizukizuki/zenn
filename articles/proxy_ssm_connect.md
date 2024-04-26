@@ -1,6 +1,6 @@
 ---
 title: "オンプレミス環境のubuntuでProxyを使うようにAWS SSM Agentを設定した時にハマったこと"
-emoji: "🤔"
+emoji: "🤺"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [ubuntu , linux, aws, proxy, ssm]
 published: true
