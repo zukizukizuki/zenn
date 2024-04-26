@@ -6,8 +6,6 @@ topics: [ubuntu , linux , rc.local , bash]
 published: true
 ---
 
-# /etc/rc.local が機能しない時の対処法
-
 ## 問題の概要
 UbuntuなどのLinux環境で、`/etc/rc.local`に記述したコマンドが起動時に実行されないことがあります。
 
