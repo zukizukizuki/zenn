@@ -40,6 +40,7 @@ published: true
 条件: {#SERVICE.NAME} matches ".*GoogleUpdate.*"
 操作:
   - ステータスを設定: 無効
+```
 
 ### 参考
 https://www.zabbix.com/forum/zabbix-help/477441-googleupdaterservice-alerts
