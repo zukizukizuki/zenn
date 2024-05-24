@@ -48,7 +48,7 @@ sudo chmod +x /home/zabbix/sh/your_script.sh
 5. scriptのownerをzabbixに変える。
 
 ```
-sudo chmod +x /home/zabbix/sh/your_script.sh
+sudo chown zabbix:zabbix /home/zabbix/sh/your_script.sh
 ```
 
 ## zabbix サーバ側の設定
