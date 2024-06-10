@@ -434,6 +434,7 @@ resource "aws_sqs_queue" "sqs-dev" {
 dev , stg , prdフォルダ配下のファイルを編集してPRを作るとterraformの自動テストが行われます
 
 ### 自動デプロイの実施
+PRをmainブランチにマージすると自動デプロイが行われます
 
 ### Terraform Cloudにstateが出来てる事の確認
 リソースを作成すると以下の様にstateが出来ている
