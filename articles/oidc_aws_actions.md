@@ -7,7 +7,7 @@ published: true
 ---
 
 ## 概要
-以下の記事を参考にgithub actions で OIDCでAWSを認証しようとしたら以下のエラー
+[この記事](https://zenn.dev/kou_pg_0131/articles/gh-actions-oidc-aws)を参考にgithub actions で OIDCでAWSを認証しようとしたら以下のエラー
 ```
 Could not assume role with OIDC: Not authorized to perform sts:AssumeRoleWithWebIdentity
 ```
@@ -18,9 +18,10 @@ Could not assume role with OIDC: Not authorized to perform sts:AssumeRoleWithWeb
 ```
                 "StringEquals": {
                     "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                }
 ```
 
-**信頼されたエンティティ**を以下に修正
+IAMロールの**信頼されたエンティティ**を以下に修正
 
 ```
 {
@@ -44,4 +45,8 @@ Could not assume role with OIDC: Not authorized to perform sts:AssumeRoleWithWeb
 ```
 
 ## 最後に
-原因は後日調査
+このポリシー条件は、GitHub Actionsから送られたOIDCトークンの aud クレームが sts.amazonaws.com と等しい場合にのみ、sts:AssumeRoleWithWebIdentity アクションを許可するという意味です。これにより、トークンが確かにAWSのSTSを対象として発行されたものであることを確認しています。
+
+aud クレームは、トークンが使用されるべき対象（オーディエンス）を示します。
+
+それが異なっていた？
