@@ -40,48 +40,48 @@ https://app.terraform.io/app/organizations
 
 
 **Create organization** から作成
-![alt text](image.png)
+![alt text](/images/image.png)
 
 必要事項を入力して作成
-![alt text](image-2.png)
+![alt text](/images/image-2.png)
 
 
 #### organization 内に Workspace を作成
 
 作成した organization にアクセスしてWorkspace を作成
-![alt text](image-3.png)
+![alt text](/images/image-3.png)
 
 **API-Driven Workflow**を選択し、
-![alt text](image-4.png)
+![alt text](/images/image-4.png)
 
 必要事項を入力し作成
-![alt text](image-5.png)
+![alt text](/images/image-5.png)
 
 settings → General にある Execution Mode を **Local** にして Save settings
-![alt text](image-6.png)
-![alt text](image-7.png)
+![alt text](/images/image-6.png)
+![alt text](/images/image-7.png)
 
 #### Terraform Cloud の認証TOKENを取得してgithubに登録
 
 対象のOrganizationをクリック
-![alt text](image-9.png)
+![alt text](/images/image-9.png)
 
 settings → teams の**Create team token**をクリック
-![alt text](image-10.png)
-![alt text](image-12.png)
+![alt text](/images/image-10.png)
+![alt text](/images/image-12.png)
 
 作成したtokenをgithubに登録するのでgithubの対象リポジトリにアクセス
-![alt text](image-13.png)
+![alt text](/images/image-13.png)
 
 settings → Secrets and variables → actions をクリック
-![alt text](image-14.png)
+![alt text](/images/image-14.png)
 
 Environment Secretは本番環境や検証環境などで区別して利用できます。
 Repository Secretはリポジトリ内で同一の値を利用できます。
 お好みでsecretを作ってください。
 今回は **TERRAFORM_CLOUD_TOKEN** というトークン名にしてます。
 
-![alt text](image-15.png)
+![alt text](/images/image-15.png)
 
 ### AWS での設定
 
@@ -95,16 +95,16 @@ OpenID Connect
 ```
 のプロバイダを作成
 
-![alt text](image-16.png)
+![alt text](/images/image-16.png)
 
 #### ロールの作成
 
 AWS → IAM → ロール → ロールの作成をクリック
 
-![alt text](image-17.png)
+![alt text](/images/image-17.png)
 
 **カスタム信頼ポリシー**を選択し、ステートメントに以下を追加
-![alt text](image-18.png)
+![alt text](/images/image-18.png)
 ```
 {
     "Version": "2012-10-17",
@@ -128,7 +128,7 @@ AWS → IAM → ロール → ロールの作成をクリック
 
 必要な権限を追加
 例では**AdministratorAccess**権限を選択
-![alt text](image-19.png)
+![alt text](/images/image-19.png)
 
 ※作成したロール名はgithub actionsで使うので控えててください
 
@@ -136,14 +136,14 @@ AWS → IAM → ロール → ロールの作成をクリック
 
 AWSの12桁のIDをgithub のsecretに入れる
 githubのリポジトリにアクセスしてsettings → Secrets and variables → actions をクリック
-![alt text](image-14.png)
+![alt text](/images/image-14.png)
 
 Environment Secretは本番環境や検証環境などで区別して利用できます。
 Repository Secretはリポジトリ内で同一の値を利用できます。
 お好みでsecretを作ってください。
 今回は **AWS_ACCOUNT_ID** というトークン名にしてます。
 
-![alt text](image-15.png)
+![alt text](/images/image-15.png)
 
 ### github actions の設定
 
@@ -440,4 +440,4 @@ PRをmainブランチにマージすると自動デプロイが行われます
 リソースを作成すると以下の様にstateが出来ている
 対象workspace移動してstateにあります
 
-![alt text](image-20.png)
+![alt text](/images/image-20.png)
