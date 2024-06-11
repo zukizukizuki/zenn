@@ -1,6 +1,6 @@
 ---
 title: "Terraform Cloudでstateを管理してgithub actionsでAWSを管理するCI/CDを組む"
-emoji: "🐺"
+emoji: "🐼"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [AWS , GitHub Actions, Github , OIDC]
 published: true
@@ -10,12 +10,12 @@ published: true
 従来はstateファイルをAWS S3 やGCP GCSで管理していたがTerraform Cloudで管理するメリットが大きい
 
 ## 従来のバケットでのstate管理
-![alt text](terraformS3.drawio.png)
+![alt text](/images/terraformS3.drawio.png)
 
 AWSにあるリソースを管理するためにAWS S3を使う釈然としない感じになってる
 
 ## Terraform Cloudでのstate管理
-![alt text](<terraform cloud.drawio (3).png>)
+![alt text](/images/terraform cloud.drawio (3).png)
 
 S3で管理していたところがTerraform Cloudになるだけだが
 
