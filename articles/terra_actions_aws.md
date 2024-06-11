@@ -15,7 +15,7 @@ published: true
 AWSにあるリソースを管理するためにAWS S3を使う釈然としない感じになってる
 
 ## Terraform Cloudでのstate管理
-![alt text](/images/terraform cloud.drawio (3).png)
+![alt text](/images/terraform.png)
 
 S3で管理していたところがTerraform Cloudになるだけだが
 
