@@ -170,6 +170,9 @@ Repository Secretはリポジトリ内で同一の値を利用できます。
         sqs.tf
 ```
 
+#### github
+https://github.com/zukizukizuki/terraform_cloud_ci_cd_test
+
 #### ファイル内容
 
 ```all-dryrun.yml
