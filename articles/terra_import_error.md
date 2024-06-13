@@ -2,7 +2,7 @@
 title: "Terraform importブロックでError: Too many command line argumentsが出る"
 emoji: "🦘"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [AWS , GitHub Actions, Github , OIDC]
+topics: [AWS , GitHub Actions, Github , terraform]
 published: true
 ---
 
