@@ -31,10 +31,8 @@ S3で管理していたところがTerraform Cloudになるだけだが
 
 ## 今回やる事
 
-- CI
-  - dev , stg , prd配下を編集してPRを作るとterraform planをする
-- CD
-  - dev , stg , prd配下を編集したPRがマージされるとterraform applyする
+- CI は dev , stg , prd配下を編集してPRを作るとterraform planをする
+- CD は dev , stg , prd配下を編集したPRがマージされるとterraform applyする
 - あくまでCI/CDがメインなのでリソースはテキトーなsqsを作ってCI/CDが動くか確認
 
 ## 実装手順
