@@ -29,6 +29,12 @@ S3で管理していたところがTerraform Cloudになるだけだが
 
 これだけメリットがあるから使わない手はない
 
+## 今回やる事
+
+- CI は dev , stg , prd配下を編集してPRを作るとterraform planをする
+- CD は dev , stg , prd配下を編集したPRがマージされるとterraform applyする
+- あくまでCI/CDがメインなのでリソースはテキトーなsqsを作ってCI/CDが動くか確認
+
 ## 実装手順
 
 ### Terraform Cloudの設定
