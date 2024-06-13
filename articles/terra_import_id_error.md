@@ -1,5 +1,5 @@
 ---
-title: "TerraformのIDプロバイダのimportでexpected "url" to have a hostが出る"
+title: "TerraformのIDプロバイダのimportでexpected \"url\" to have a hostが出る"
 emoji: "🍑"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [AWS , GitHub Actions, Github , terraform]
