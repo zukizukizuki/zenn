@@ -15,7 +15,7 @@ Iot Coreで吸い上げたデータをルールエンジンを使用して別ア
 1. **AWS IoT Core**: デバイスからのメッセージを受信し、ルールエンジンで処理。送信元アカウントになる。
 2. **Amazon SQS**: メッセージをキューイングし、異なるアカウントに配信。送信先アカウントになる。
 
-![アーキテクチャ図](https://d2908q01vomqb2.cloudfront.net/62b7acb50c6c2a0006e6ec3c/2023/06/13/iot-core-sqs-diagram-1-1.png)
+![](https://storage.googleapis.com/zenn-user-upload/3ad723012f2e-20240625.png)
 
 ## 実装手順
 
