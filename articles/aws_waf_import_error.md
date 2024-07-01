@@ -1,5 +1,5 @@
 ---
-title: "【AWS】CloudFrontに割り当てたWAFをterraformでimportしようよしたらError reason: The scope is not valid(400エラー) が出る"
+title: "【AWS】WAFをterraform importしようとしたらThe scope is not valid(400エラー) が出る"
 emoji: "🌪️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [AWS , CloudFront, terraform , WAF]
