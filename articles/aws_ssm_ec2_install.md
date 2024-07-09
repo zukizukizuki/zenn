@@ -37,7 +37,7 @@ sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/late
 
 3. EC2 に 割り当てるIAMロールを作成するIAMコンソールで以下のロールを作成する
 
-| 項目 | 値 |
+| **項目** | **値** |
 | ---- | ---- |
 | 信頼されたエンティティタイプ | AWS のサービス |
 | ユースケース | EC2 Role for AWS Systems Manager |
