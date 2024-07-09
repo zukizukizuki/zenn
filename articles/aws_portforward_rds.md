@@ -50,7 +50,7 @@ aws ssm start-session \
 |ホスト名/IP|localhost|
 |ユーザー|${user名}|
 |パスワード|${パスワード}|
-|ポート|port|
+|ポート|3306|
 
 ![](https://storage.googleapis.com/zenn-user-upload/3629e29a85f3-20240709.png)
 
