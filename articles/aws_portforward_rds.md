@@ -9,6 +9,7 @@ published: true
 ## 概要
 下図の通りEC2 にSSM agentをinstallしてそこから繋ぐことが出来るRDSにローカルアクセスします。
 
+![](https://storage.googleapis.com/zenn-user-upload/394a17b598e8-20240709.png)
 
 ## 前提
 - EC2 に SSM agentをinstall 済
@@ -50,6 +51,8 @@ aws ssm start-session \
 |ユーザー|${user名}|
 |パスワード|${パスワード}|
 |ポート|port|
+
+![](https://storage.googleapis.com/zenn-user-upload/3629e29a85f3-20240709.png)
 
 ## 参考
 
