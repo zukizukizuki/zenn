@@ -24,10 +24,10 @@ published: true
 
 windows
 ```
-aws ssm start-session \
---target i-xxxxx \
---document-name AWS-StartPortForwardingSessionToRemoteHost \
---parameters "{\"portNumber\":[\"3306\"],\"localPortNumber\":[\"3306\"],\"host\":[\"rds-dev.xxxxx.ap-northeast-1.rds.amazonaws.com\"]}" \
+aws ssm start-session ^
+--target i-xxxxx ^
+--document-name AWS-StartPortForwardingSessionToRemoteHost ^
+--parameters "{\"portNumber\":[\"3306\"],\"localPortNumber\":[\"3306\"],\"host\":[\"rds-dev.xxxxx.ap-northeast-1.rds.amazonaws.com\"]}" ^
 --profile iamuser-xxxxx
 ```
 
