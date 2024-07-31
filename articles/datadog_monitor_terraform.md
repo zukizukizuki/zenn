@@ -16,8 +16,36 @@ published: true
 terraform login
 ```
 
+## main.tfの作成
+
+以下は作成例
+
+```
+terraform {
+  required_providers {
+    datadog = {
+      source  = "DataDog/datadog"
+      version = "~> 3.0"
+    }
+  }
+  cloud {
+    organization = "${terraform cloudの組織名}"
+
+    workspaces {
+      name = "${terraform cloudのワークスペース名}"
+    }
+  }
+}
+
+provider "datadog" {
+  api_key = ${DATADOG_API_KEY の値}
+  app_key = ${DATADOG_APP_KEY の値}
+}
+
+```
+
 ## import ブロックの作成
-適切な Terraform 設定ファイル(例:main.tf) import ブロックを作成します。
+適切な Terraform 設定ファイル(例:import.tf) import ブロックを作成します。
 
 ```hcl
 import {
