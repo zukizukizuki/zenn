@@ -1,5 +1,5 @@
 ---
-title: "GCPとGitHub ActionsでOIDC認証を設定してgithub actionsでterraform plan(apply)を実施する"
+title: "GCPとGitHub ActionsでOIDC認証しgithub actionsでterraform planを実施する"
 emoji: "🫏"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [gcp , github actions , oidc , terraform , CI/CD]
