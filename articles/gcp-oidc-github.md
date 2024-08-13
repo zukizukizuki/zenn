@@ -32,7 +32,8 @@ gcloud iam workload-identity-pools create "github-pool" \
   --display-name="GitHub Actions Pool"
 ```
 
-![](https://storage.googleapis.com/zenn-user-upload/b05df8766240-20240813.png)
+コンソールでやる場合、以下の部分
+![](https://storage.googleapis.com/zenn-user-upload/cb62d81ceed2-20240813.png)
 
 ### Workload Identity Providerの作成
 
@@ -47,7 +48,9 @@ gcloud iam workload-identity-pools providers create-oidc "github-provider" \
   --issuer-uri="https://token.actions.githubusercontent.com"
 ```
 
-![](https://storage.googleapis.com/zenn-user-upload/52d358bb9787-20240813.png)
+コンソールでやる場合、以下の部分
+![](https://storage.googleapis.com/zenn-user-upload/8c57bdc833df-20240813.png)
+![](https://storage.googleapis.com/zenn-user-upload/fb19a23b1ebc-20240813.png)
 
 ### サービスアカウントの作成
 
@@ -58,6 +61,9 @@ gcloud iam service-accounts create "terraform" \
   --display-name="Terraform Service Account"
 ```
 
+コンソールでやる場合、以下の部分
+![](https://storage.googleapis.com/zenn-user-upload/2636b7773657-20240813.png)
+
 ### サービスアカウントに権限を付与
 作成したサービスアカウントに必要な権限を付与します。
 ```bash
@@ -66,7 +72,9 @@ gcloud projects add-iam-policy-binding "YOUR_PROJECT_ID" \
   --role="roles/editor"
 ```
 
-![](https://storage.googleapis.com/zenn-user-upload/9ecd4e20d04d-20240813.png)
+コンソールでやる場合、以下の部分
+![](https://storage.googleapis.com/zenn-user-upload/0d0757646ea4-20240813.png)
+
 注意：セキュリティのベストプラクティスとして、roles/editorの代わりに必要最小限の権限を持つカスタムロールを使用することをお勧めします。
 
 ### Workload Identity Poolとサービスアカウントの関連付け
