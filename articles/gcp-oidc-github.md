@@ -6,9 +6,6 @@ topics: [gcp , github actions , oidc , terraform , CI/CD]
 published: true
 ---
 
-
-# GCPとGitHub ActionsでOIDC認証を設定する方法
-
 ## はじめに
 
 Google Cloud Platform (GCP) とGitHub Actionsを連携させる際、OIDCを使用することで、より安全で効率的な認証が可能になります。この記事では、GCPでWorkload Identity Federationを設定し、GitHub Actionsと連携させる手順を解説します。
@@ -32,7 +29,7 @@ gcloud iam workload-identity-pools create "github-pool" \
   --display-name="GitHub Actions Pool"
 ```
 
-コンソールでやる場合、以下の部分
+※コンソールでやる場合、以下の部分
 ![](https://storage.googleapis.com/zenn-user-upload/cb62d81ceed2-20240813.png)
 
 ### Workload Identity Providerの作成
@@ -48,7 +45,7 @@ gcloud iam workload-identity-pools providers create-oidc "github-provider" \
   --issuer-uri="https://token.actions.githubusercontent.com"
 ```
 
-コンソールでやる場合、以下の部分
+※コンソールでやる場合、以下の部分
 ![](https://storage.googleapis.com/zenn-user-upload/8c57bdc833df-20240813.png)
 ![](https://storage.googleapis.com/zenn-user-upload/fb19a23b1ebc-20240813.png)
 
@@ -61,7 +58,7 @@ gcloud iam service-accounts create "terraform" \
   --display-name="Terraform Service Account"
 ```
 
-コンソールでやる場合、以下の部分
+※コンソールでやる場合、以下の部分
 ![](https://storage.googleapis.com/zenn-user-upload/2636b7773657-20240813.png)
 
 ### サービスアカウントに権限を付与
@@ -72,7 +69,7 @@ gcloud projects add-iam-policy-binding "YOUR_PROJECT_ID" \
   --role="roles/editor"
 ```
 
-コンソールでやる場合、以下の部分
+※コンソールでやる場合、以下の部分
 ![](https://storage.googleapis.com/zenn-user-upload/0d0757646ea4-20240813.png)
 
 注意：セキュリティのベストプラクティスとして、roles/editorの代わりに必要最小限の権限を持つカスタムロールを使用することをお勧めします。
