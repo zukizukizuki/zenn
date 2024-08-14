@@ -6,7 +6,7 @@ topics: [aws , error, ec2 , cloud]
 published: true
 ---
 
-## はじめに
+## 概要
 
 以下のterraformでEC2を作ろうとしたところグループが見つからない旨のエラーが出現
 
