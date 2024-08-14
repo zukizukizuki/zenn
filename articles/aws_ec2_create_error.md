@@ -6,13 +6,13 @@ topics: [aws , error, ec2 , cloud]
 published: true
 ---
 
-## はじめに
+## 概要
 
-以下のterraformでEC2を作ろうとしたところグループが見つからない旨のエラーが出現
+以下のterraformでEC2を作ろうとしたところSGグループが見つからない旨のエラーが出現
 
 ## tfファイル
 ```
-resource "aws_instance" "dev_db_jump_01" {
+resource "aws_instance" "dev_test_01" {
   ami                  = "ami-"
   availability_zone    = "ap-northeast-1a"
   iam_instance_profile = "SSM_access_for_EC2"
