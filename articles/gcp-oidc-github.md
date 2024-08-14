@@ -74,13 +74,20 @@ gcloud projects add-iam-policy-binding "YOUR_PROJECT_ID" \
 
 注意：セキュリティのベストプラクティスとして、roles/editorの代わりに必要最小限の権限を持つカスタムロールを使用することをお勧めします。
 
+### Workload Identity Poolの完全な名前（フルパス）を取得
+以下のコマンドで取得
+
+```bash
+gcloud iam workload-identity-pools describe "github-pool" --project="YOUR_PROJECT_ID" --location="global" --format="value(name)"
+```
+
 ### Workload Identity Poolとサービスアカウントの関連付け
 最後に、Workload Identity Poolとサービスアカウントを関連付けます。
 ```
 gcloud iam service-accounts add-iam-policy-binding "terraform@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
   --project="YOUR_PROJECT_ID" \
   --role="roles/iam.workloadIdentityUser" \
-  --member="principalSet://iam.googleapis.com/projects/YOUR_PROJECT_NUMBER/locations/global/workloadIdentityPools/github-pool/attribute.repository/YOUR_GITHUB_ORG/YOUR_GITHUB_REPO"
+  --member="principalSet://iam.googleapis.com/projects/${Workload Identity Poolの完全な名前}/attribute.repository/${YOUR_GITHUB_ORG}/${YOUR_GITHUB_REPO}"
 ```
 
 ### GitHub Actionsの設定
