@@ -12,7 +12,7 @@ published: true
 
 ## tfファイル
 ```
-resource "aws_instance" "dev_db_jump_01" {
+resource "aws_instance" "dev_test_01" {
   ami                  = "ami-"
   availability_zone    = "ap-northeast-1a"
   iam_instance_profile = "SSM_access_for_EC2"
