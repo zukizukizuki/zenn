@@ -1,6 +1,6 @@
 ---
 title: "【AWS】terraform で EC2を作成しようとしたところ InvalidGroup.NotFound が出る"
-emoji: "🧑‍🍼"
+emoji: "☘️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [aws , error, ec2 , cloud]
 published: true
