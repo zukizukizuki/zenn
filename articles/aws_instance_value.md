@@ -1,6 +1,6 @@
 ---
-title: "【AWS】[instance value ("AUTO") not found in enum] エラーの対応方法"
-emoji: "🌵"
+title: "【AWS】[instance value (\"AUTO\") not found in enum] エラーの対応方法"
+emoji: "🥬"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [aws , error, SQS , IAM , AWS IoT Core]
 published: true
