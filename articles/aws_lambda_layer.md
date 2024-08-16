@@ -1,90 +1,63 @@
 ---
-title: "【AWS】Lambdaレイヤーの作成とアップロード手順"
+title: "【AWS】Lambdaレイヤーの作成とアップロード手順(python)"
 emoji: "✂️"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [aws , lambda, Lambdaレイヤー , EC2]
+topics: [aws , lambda, Lambdaレイヤー , cloud9 . python]
 published: true
 ---
 
-AWS Lambdaで`mysqldump`コマンドを使用するために、Lambdaレイヤーを作成し、ローカルのWindows端末にダウンロードしてからAWSコンソールでアップロードする手順を解説します。
+AWS Lambdaで`pymysql`コマンドを使用するために、Lambdaレイヤーを作成し、ローカルのWindows端末にダウンロードしてからAWSコンソールでアップロードする手順を解説します。
 
-## EC2インスタンスでのLambdaレイヤーの作成
+## Cloud9の立ち上げ
 
-まず、必要なライブラリを含むLambdaレイヤーをEC2インスタンス上で作成します。
+- AWSコンソールでCloud9を選択し、新しい環境を作成します。
+- 作成が完了したら環境を開きます。
 
-### 必要なディレクトリの作成
+## Pyenvのインストール
 
+次のコマンドでpyenvをインストールします。
 ```bash
-mkdir -p lambda-layer/lib
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 ```
-### 依存ファイルの調査
-mysqldumpコマンドが依存しているライブラリを調べるためには、lddコマンドを使用します。以下のように実行します。
 
+## Pyenvのパス設定
+
+~/.bashrcにpyenvのパスを追加し、シェルに反映させます。
 ```bash
-ldd /usr/bin/mysqldump
+echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+source ~/.bashrc
 ```
+## Pythonのインストール
 
-実行結果には、mysqldumpが依存しているライブラリが一覧表示されます。例えば、以下のような出力が得られます。
-
+必要なPythonのバージョン（例では3.11.0）をインストールし、グローバルに設定します。
 ```bash
-linux-vdso.so.1 (0x00007ffe347fb000)
-libssl.so.3 => /lib64/libssl.so.3 (0x00007f025a2b1000)
-libcrypto.so.3 => /lib64/libcrypto.so.3 (0x00007f0259e00000)
-libresolv.so.2 => /lib64/libresolv.so.2 (0x00007f025a29d000)
-libm.so.6 => /lib64/libm.so.6 (0x00007f0259d25000)
-libstdc++.so.6 => /lib64/libstdc++.so.6 (0x00007f0259a00000)
-libgcc_s.so.1 => /lib64/libgcc_s.so.1 (0x00007f025a283000)
-libc.so.6 => /lib64/libc.so.6 (0x00007f0259600000)
-libz.so.1 => /lib64/libz.so.1 (0x00007f025a267000)
+pyenv install 3.11.0
+pyenv global 3.11.0
 ```
 
-### 依存ライブラリのコピー
-調べた依存ライブラリをlambda-layer/lib/ディレクトリにコピーします。以下のコマンドを実行します。
+## Pythonのバージョン確認
 
+正しくインストールされていることを確認します。
 ```bash
-cp /lib64/libssl.so.3 lambda-layer/lib/
-cp /lib64/libcrypto.so.3 lambda-layer/lib/
-cp /lib64/libresolv.so.2 lambda-layer/lib/
-cp /lib64/libm.so.6 lambda-layer/lib/
-cp /lib64/libstdc++.so.6 lambda-layer/lib/
-cp /lib64/libgcc_s.so.1 lambda-layer/lib/
-cp /lib64/libc.so.6 lambda-layer/lib/
-cp /lib64/libz.so.1 lambda-layer/lib/
-cp /lib64/ld-linux-x86-64.so.2 lambda-layer/lib/
+python3 --version
 ```
 
-### LambdaレイヤーのZIPファイルを作成
-依存ファイルを含むディレクトリの準備ができたら、以下のコマンドでZIPファイルを作成します。
+## 必要ライブラリのインストール
 
+pymysqlなどの必要なライブラリをインストールし、そのディレクトリを作成します。
 ```bash
-cd lambda-layer
-zip -r ../mysqldump-layer.zip .
+mkdir python && cd $_
+pip install pymysql -t .
 ```
 
-## Lambdaレイヤーのダウンロード
-次に、作成したZIPファイルをローカルのWindows端末にダウンロードします。以下のscpコマンドを使用します。
-※windows端末です
+## Lambdaレイヤー用のZIPファイル作成
 
-```
-scp -i C:\\Users\\user\\Documents\\aws\\XXX.pem ec2-user@xxx.xxx.xxx.xxx:/home/ec2-user/mysqldump-layer.zip C:\\Users\\user\\Documents\\aws
-```
+インストールしたライブラリを含めたディレクトリをZIPファイルに圧縮します。
+ZIPファイルをローカルにダウンロードします。
 
-コマンドの各部分の説明：
+## Lambdaコンソールからレイヤーのアップロード
+- AWS Lambdaコンソールに移動し、新しいレイヤーを作成します。
+- ダウンロードしたZIPファイルをアップロードし、レイヤーを完成させます。
 
-- -i オプションは、SSH接続に使用する秘密鍵のファイルパスを指定します。
-- ec2-user@xxx.xxx.xxx.xxx は、EC2インスタンスのユーザー名とIPアドレスです。
-- /home/ec2-user/mysqldump-layer.zip は、EC2インスタンス上のファイルのパスです。
-- C:\\Users\\user\\Documents\\aws は、ローカル端末上のダウンロード先のパスです。
-
-## AWSコンソールでのレイヤーのアップロード
-ダウンロードしたZIPファイルをAWSコンソールにアップロードしてLambdaレイヤーとして使用します。
-
-### アップロード手順
-1. AWS Management Consoleにログインします。
-2. 「Lambda」サービスに移動します。
-3. 左側のメニューから「レイヤー」を選択し、「レイヤーを作成」をクリックします。
-4. 「名前」フィールドにレイヤー名を入力し、「アップロード」オプションを選択して、ダウンロードしたZIPファイルを選択します。
-5. 「作成」をクリックしてレイヤーを作成します。
-
-## 結論
-これで、Lambda関数でmysqldumpを使用できるようになります。
+これでpymysqlがlambdaで使えるようになります。
