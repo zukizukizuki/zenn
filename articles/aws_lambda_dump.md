@@ -6,8 +6,6 @@ topics: [aws , lambda, RDS , dump , S3]
 published: true
 ---
 
-# LambdaとRDSを同一VPCに配置し、S3にダンプする方法
-
 以下の手順で、LambdaとRDSを同一VPCに配置し、S3にデータベースのdumpファイルを保存する環境を構築します。
 
 ## 前提条件
@@ -18,7 +16,7 @@ published: true
 
 ## 手順
 
-1. VPCの設定
+### VPCの設定
 
 既存のVPCを使用するか、新しいVPCを作成します。VPCには少なくとも2つのサブネット（プライベートサブネット）が必要です。
 
@@ -54,7 +52,7 @@ resource "aws_subnet" "private_2" {
 }
 ```
 
-2. S3バケットの作成
+### S3バケットの作成
 
 データベースダンプを保存するためのS3バケットを作成します。
 
@@ -79,7 +77,7 @@ resource "aws_s3_bucket_public_access_block" "db_dump" {
 }
 ```
 
-3. VPCエンドポイントの設定
+### VPCエンドポイントの設定
 
 S3へのアクセスを可能にするため、VPCエンドポイントを作成します。
 
@@ -95,7 +93,7 @@ resource "aws_vpc_endpoint_route_table_association" "private_s3" {
 }
 ```
 
-4. RDSインスタンスの設定
+### RDSインスタンスの設定
 
 VPC内のプライベートサブネットにRDSインスタンスを作成します。
 
@@ -127,7 +125,7 @@ resource "aws_db_subnet_group" "default" {
 }
 ```
 
-5. Lambda関数の作成
+### Lambda関数の作成
 
 データベースダンプを実行し、S3にアップロードするLambda関数を作成します。この関数もVPC内のプライベートサブネットに配置します。
 ※lambdaレイヤーを設定し、pymysqlを使えるようにする必要があります。([手順](https://zukkie.link/%e3%80%90aws%e3%80%91lambda%e3%83%ac%e3%82%a4%e3%83%a4%e3%83%bc%e3%81%ae%e4%bd%9c%e6%88%90%e3%81%a8%e3%82%a2%e3%83%83%e3%83%97%e3%83%ad%e3%83%bc%e3%83%89%e6%89%8b%e9%a0%86/))
@@ -182,7 +180,7 @@ def lambda_handler(event, context):
     }
 ```
 
-6. IAMロールの設定
+### IAMロールの設定
 
 Lambda関数用のIAMロールを作成し、必要な権限（RDSアクセス、S3アクセス、VPC内でのネットワーキング）を付与します。
 
@@ -233,7 +231,7 @@ resource "aws_iam_role_policy" "lambda_s3_access" {
 }
 ```
 
-7. セキュリティグループの設定
+### セキュリティグループの設定
 
 LambdaとRDS用のセキュリティグループを作成し、必要な通信を許可します。
 
@@ -265,7 +263,7 @@ resource "aws_security_group" "rds" {
 }
 ```
 
-8. Lambda関数のデプロイ
+### Lambda関数のデプロイ
 
 作成したLambda関数をデプロイします。
 
@@ -300,7 +298,7 @@ resource "aws_lambda_function" "db_dump" {
 }
 ```
 
-9. スケジューリングの設定（オプション）
+### スケジューリングの設定（オプション）
 
 定期的なダンプ実行のため、Amazon EventBridgeを使用してLambda関数をスケジュールします。
 
