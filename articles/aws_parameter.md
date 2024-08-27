@@ -6,8 +6,6 @@ topics: [aws , Parameter Store, Systems Manager , セキュリティ ,terraform]
 published: true
 ---
 
-# AWS Systems Manager Parameter Store を使用して機密情報を安全に管理する方法
-
 AWS インフラストラクチャを Terraform で管理する際、データベースのパスワードや API キーなどの機密情報を安全に扱うことは非常に重要です。今回は、AWS Systems Manager Parameter Store を使用して機密情報を SecureString として保存し、それを Terraform で取得および復号化する方法を紹介します。
 
 ## 前提
