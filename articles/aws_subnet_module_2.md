@@ -6,8 +6,6 @@ topics: [AWS , EC2, terraform , Cloud]
 published: true
 ---
 
-# Terraformの公式AWS VPCモジュールを使用してサブネットを管理する方法
-
 ## はじめに
 
 [この記事](https://zukkie.link/%e3%80%90aws%e3%80%91terraform%e3%81%a7subnet%e3%82%92%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e5%8c%96%e3%81%99%e3%82%8b/#google_vignette)でsubnetをモジュール化していたが公式のモジュールがあるのでそれを使ってみる
