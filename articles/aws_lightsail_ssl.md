@@ -2,7 +2,7 @@
 title: "【AWS】LightSailのSSL証明書の自動更新"
 emoji: "🍖"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [aws , LightSail, WordPress , SSL . Bitnami]
+topics: [aws , LightSail, WordPress , SSL , Bitnami]
 published: true
 ---
 
