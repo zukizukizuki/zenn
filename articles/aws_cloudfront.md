@@ -6,9 +6,9 @@ topics: [aws , CloudFront, terraform , ACM]
 published: true
 ---
 
-## 1. ACM（AWS Certificate Manager）での証明書設定
+## ACM（AWS Certificate Manager）での証明書設定
 
-### 1.1 ACM証明書の作成
+### ACM証明書の作成
 
 1. AWSマネジメントコンソールにログインし、リージョンを「バージニア北部（us-east-1）」に切り替えます。
 2. 「Certificate Manager」サービスに移動します。
@@ -19,7 +19,7 @@ published: true
    - 追加の名前を追加: ```*.app.example.com```
 6. 「DNS検証」を選択し、「リクエスト」をクリックします。
 
-### 1.2 DNS検証の完了
+### DNS検証の完了
 
 1. 証明書の詳細ページに表示されるCNAMEレコードをコピーします。
 2. DNSプロバイダー（例：CloudFlare）のダッシュボードに移動します。
@@ -29,9 +29,9 @@ published: true
    - 値: [ACMが提供した値]
 4. ACMコンソールに戻り、検証のステータスが「成功」になるまで待ちます（数分から数時間かかる場合があります）。
 
-## 2. CloudFrontディストリビューションの作成
+## CloudFrontディストリビューションの作成
 
-### 2.1 Terraformコードの作成
+### Terraformコードの作成
 
 以下のTerraformコードを使用してCloudFrontディストリビューションを作成します：
 
@@ -97,7 +97,7 @@ output "cloudfront_domain_name" {
 }
 ```
 
-### 2.2 Terraformの実行
+### Terraformの実行
 
 1. Terraformコードを保存したディレクトリに移動します。
 2. 以下のコマンドを順に実行します：
@@ -108,9 +108,9 @@ output "cloudfront_domain_name" {
    ```
 3. 確認メッセージが表示されたら「yes」と入力します。
 
-## 3. CloudFrontのテスト方法
+## CloudFrontのテスト方法
 
-### 3.1 ドメイン名の設定
+### ドメイン名の設定
 
 1. CloudFlareのダッシュボードに移動します。
 2. DNSセクションで新しいレコードを追加します：
@@ -119,7 +119,7 @@ output "cloudfront_domain_name" {
    - ターゲット: [CloudFrontのドメイン名]
    - プロキシステータス: オン（オレンジの雲アイコン）
 
-### 3.2 基本的な動作確認
+### 基本的な動作確認
 
 1. ブラウザで ```https://app.example.com``` にアクセスします。
 2. ページが正常に表示されることを確認します。
@@ -127,7 +127,7 @@ output "cloudfront_domain_name" {
    - リクエストがCloudFrontを経由していることを確認（Response Headersに「X-Cache」などのCloudFront特有のヘッダーがあることを確認）
    - SSL/TLS証明書が正しく適用されていることを確認
 
-### 3.3 キャッシュの動作確認
+### キャッシュの動作確認
 
 1. オリジンサーバーで特定のファイル（例：```/test.html```）を作成または更新します。
 2. ```https://app.example.com/test.html``` にアクセスし、コンテンツを確認します。
@@ -135,17 +135,17 @@ output "cloudfront_domain_name" {
 4. すぐに再度アクセスし、古いコンテンツがキャッシュされていることを確認します。
 5. キャッシュのTTL（デフォルトでは1時間）が経過した後、再度アクセスして新しいコンテンツが表示されることを確認します。
 
-### 3.4 地理的制限のテスト（設定している場合）
+### 地理的制限のテスト（設定している場合）
 
 1. VPNを使用して、許可されている国と制限されている国からアクセスを試みます。
 2. 適切にアクセスが制御されていることを確認します。
 
-### 3.5 エラーページのテスト
+### エラーページのテスト
 
 1. 存在しないページ（例：```https://app.example.com/nonexistent.html```）にアクセスします。
 2. 適切なエラーページが表示されることを確認します。
 
-### 3.6 パフォーマンステスト
+### パフォーマンステスト
 
 1. Google PageSpeed Insights（```https://pagespeed.web.dev/```）を使用してページの読み込み速度を測定します。
 2. 異なる地理的位置からのレイテンシーをテストするために、```https://www.webpagetest.org/```を使用します。
