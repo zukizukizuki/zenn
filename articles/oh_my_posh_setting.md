@@ -2,7 +2,7 @@
 title: "Windows環境でOh My Poshをインストール・テーマ切り替え手順"
 emoji: "🥪"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [windows , powershell, w32time , linux]
+topics: [windows , powershell, Terminal]
 published: true
 ---
 
