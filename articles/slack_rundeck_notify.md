@@ -6,9 +6,6 @@ topics: [rundeck , linux, aws, slack]
 published: true
 ---
 
-
-# RundeckとSlackを連携し、Slackに通知する方法
-
 Rundeckでジョブ実行の結果をSlackに通知するために、Slack Incoming Webhookプラグインを使って設定する方法を解説します。
 
 ## 前提条件
