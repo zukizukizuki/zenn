@@ -1,5 +1,5 @@
 ---
-title: "【2024年版】RundeckとSlackを連携し、ジョブ結果をSlackに通知する方法"
+title: "【2024年版】Rundeckのジョブ結果をSlackに通知する方法"
 emoji: "🪥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [rundeck , linux, aws, slack]
