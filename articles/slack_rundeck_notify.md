@@ -1,13 +1,10 @@
 ---
-title: "【2024年版】RundeckとSlackを連携し、ジョブ結果をSlackに通知する方法"
+title: "【2024年版】Rundeckのジョブ結果をSlackに通知する方法"
 emoji: "🪥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [rundeck , linux, aws, slack]
 published: true
 ---
-
-
-# RundeckとSlackを連携し、Slackに通知する方法
 
 Rundeckでジョブ実行の結果をSlackに通知するために、Slack Incoming Webhookプラグインを使って設定する方法を解説します。
 
