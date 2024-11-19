@@ -15,16 +15,12 @@ AWS Lambda 関数から ElastiCache (Redis) に接続した際、以下のエラ
 
 このエラーは、Redis への接続時に TLS (SSL) が無効になっている場合に発生することが判明しました。本記事では、この問題を解決するために TLS を有効化した手順を記録します。
 
----
-
 ## 発生していた問題
 1. **ElastiCache の TLS が無効**
    - `TransitEncryptionEnabled` が `false` の状態であったため、Lambda 環境変数で `rediss://` プロトコルを使用して接続を試みた際に失敗していました。
 
 2. **エラー詳細**
    - `SSL: WRONG_VERSION_NUMBER` エラーは、TLS が無効なクラスターに対して `rediss://` を使用して接続した場合に発生します。
-
----
 
 ## 解決手順
 
@@ -40,8 +36,6 @@ aws elasticache describe-replication-groups --replication-group-id prd-redis
 "TransitEncryptionEnabled": false
 ```
 TLS が無効であることを確認しました。
-
----
 
 ### 2. ElastiCache の TLS を有効化
 TLS を有効にするために、Terraform の ElastiCache 設定を修正しました。
@@ -81,8 +75,6 @@ resource "aws_elasticache_replication_group" "redis" {
 }
 ```
 
----
-
 ### 3. Lambda の接続設定の確認
 Lambda の環境変数で設定している Redis URL に問題がないかを確認しました。
 
@@ -98,8 +90,6 @@ rediss://<Redisエンドポイント>:6379/0
 
 問題なく正しい形式で生成されていることを確認しました。
 
----
-
 ### 4. 動作確認
 修正後、再デプロイを実施して動作確認を行いました。
 
@@ -108,8 +98,6 @@ terraform apply
 ```
 
 その後、Lambda 関数をトリガーした結果、Redis に正しく接続できることを確認しました。
-
----
 
 ## まとめ
 本記事では、AWS Lambda から ElastiCache (Redis) への接続で発生した TLS 関連のエラーを解消するための手順を説明しました。
