@@ -2,16 +2,12 @@
 title: "【解決方法】Microsoft Visual C++ で "Assertion failed!" エラーが発生した場合"
 emoji: "🍒"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [Microsoft , C++, Adobe , ]
+topics: [Microsoft , C++, Adobe]
 published: true
 ---
 
-# 【解決方法】Microsoft Visual C++ で "Assertion failed!" エラーが発生した場合
-
 最近、PC上で **"Assertion failed!"** エラーが発生して困っていました。このエラーの原因が **Microsoft Visual C++** や **Adobe Creative Cloud Experience** に関連していることが判明し、以下の手順で解決しました。
 同じエラーで悩んでいる方の参考になれば幸いです。
-
----
 
 ## 前提
 
@@ -19,8 +15,6 @@ published: true
 - **CPU:** Intel Core i7-12700 (12コア20スレッド)
 - **GPU:** NVIDIA GeForce RTX 3060
 - **メモリ:** 48GB (増設済)
-
----
 
 ## 発生したエラーの詳細
 
@@ -35,8 +29,6 @@ published: true
   **Line:** 390
 
 このエラーは **Microsoft Visual C++** や **node-vulcanjs** に関連していることが示唆されており、原因究明を進めました。
-
----
 
 ## 解決の糸口: 問題のファイルを特定した方法
 
@@ -53,8 +45,6 @@ Get-ChildItem -Path C:\ -Recurse -ErrorAction SilentlyContinue -Filter "node-vul
 ```
 
 この結果、問題が **Adobe Creative Cloud Experience** に関連している可能性が高いことが判明しました。
-
----
 
 ## 試したけれど効果がなかった方法
 
@@ -75,8 +65,6 @@ Get-ChildItem -Path C:\ -Recurse -ErrorAction SilentlyContinue -Filter "node-vul
 5. **関連アプリケーションのアップデート**
    - Node.js プロジェクトなど、関連アプリを確認しようとしましたが、最終的に **Adobe Creative Cloud Experience** に起因していることが判明。
 
----
-
 ## 問題解決の手順
 
 以下の手順を実施した結果、エラーが解消されました。
@@ -95,8 +83,6 @@ Get-ChildItem -Path C:\ -Recurse -ErrorAction SilentlyContinue -Filter "node-vul
 4. **画面の指示に従ってアンインストール**
    - 指示に従い、アンインストールを完了させます。
 
----
-
 ### **手順 2: 残存ファイルの削除 (必要に応じて)**
 
 1. **以下のディレクトリを確認し、残存ファイルを削除します:**
@@ -110,19 +96,13 @@ Get-ChildItem -Path C:\ -Recurse -ErrorAction SilentlyContinue -Filter "node-vul
      - `HKEY_CURRENT_USER\Software\Adobe`
      - `HKEY_LOCAL_MACHINE\Software\Adobe`
 
----
-
 ### **手順 3: 再起動**
 
 - アンインストールとファイルの削除後に PC を再起動しました。
 
----
-
 ## 結果
 
 上記の手順を実施した後、問題の **"Microsoft Visual C++ Assertion failed!"** エラーが発生しなくなりました。
-
----
 
 ## 注意点
 
@@ -133,8 +113,6 @@ Get-ChildItem -Path C:\ -Recurse -ErrorAction SilentlyContinue -Filter "node-vul
 
 2. **関連するソフトウェアやドライバの再確認**
    - 他の関連アプリやドライバに問題がないか確認します。
-
----
 
 ## まとめ
 
