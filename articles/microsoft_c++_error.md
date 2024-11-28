@@ -42,15 +42,15 @@ published: true
 
 エラーに関連するファイルの位置を突き止めるため、以下のコマンドを実行しました。
 
-$$$
+```
 Get-ChildItem -Path C:\ -Recurse -ErrorAction SilentlyContinue -Filter "node-vulcanjs"
-$$$
+```
 
 このコマンドにより、関連ファイルが以下のディレクトリに存在していることを特定しました。
 
-$$$
+```
 ディレクトリ: C:\Program Files\Adobe\Adobe Creative Cloud Experience\js\node_modules
-$$$
+```
 
 この結果、問題が **Adobe Creative Cloud Experience** に関連している可能性が高いことが判明しました。
 
@@ -138,5 +138,7 @@ $$$
 
 ## まとめ
 
-**"Microsoft Visual C++ Assertion failed!"** エラーの解消には、意外にも **Adobe Creative Cloud Experience** のアンインストールが有効でした。
+**"Microsoft Visual C++ Assertion failed!"** エラーの解消には、**Adobe Creative Cloud Experience** のアンインストールが有効でした。
+また Adobeのコミュニティで[同様の事象について議論されていました](https://community.adobe.com/t5/creative-cloud%E3%81%AE%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%A8%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB-discussions/%E6%95%B0%E6%97%A5%E5%89%8D%E3%81%8B%E3%82%89%E5%87%BA%E3%81%A6%E3%81%8F%E3%82%8B%E6%A7%98%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F/td-p/11879193?profile.language=ja)。
+
 同じエラーで悩んでいる方の参考になれば幸いです。
