@@ -3,7 +3,7 @@ title: "Terraformでリソースを`import`ブロックなしでインポート�
 emoji: "🧹"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [AWS , GitHub Actions, Github , terraform]
-published: true
+published: false
 ---
 
 Terraform v1.5.0以降では、`terraform plan --generate-config-out`を使用することで、従来の`terraform import`コマンドや[importブロック](https://zukkie.link/terraform%e3%81%a7%e3%83%ad%e3%83%bc%e3%82%ab%e3%83%ab%e3%81%8b%e3%82%89import%e3%81%99%e3%82%8b%e6%96%b9%e6%b3%95/)を使用せずに、リソースをTerraform管理下にインポートできる機能が追加されました。この方法では、直接リソースのARNやIDをリソースブロック内に記載し、設定を生成することができます。
@@ -46,4 +46,4 @@ terraform plan --generate-config-out imported_resources.tf
 ## 関連リンク
 公式ドキュメントや実装例については以下を参照してください:
 - [Terraform v1.5.0 リリースノート](https://www.hashicorp.com/releases)
-- [Terraform Import機能の詳細](https://developer.hashicorp.com/terraform/cli/import)
+- [Terraform Import機能の詳細](https://developer.hashicorp.com/terraform/cli/import) -->
