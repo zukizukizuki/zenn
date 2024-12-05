@@ -1,11 +1,10 @@
-
-
+---
 title: "【AWS】ECRにimageを異なるアカウントにあるECRにpushする"
 emoji: "🐛"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [aws, ECR, docker, image]
 published: true
-
+---
 
 ## 目的
 この手順の目的は、あるAWSアカウントのECR（Elastic Container Registry）に格納されているDockerイメージを、別のAWSアカウントのECRに移動することです。これにより、異なるアカウント間でイメージの共有やデプロイが可能になります。
