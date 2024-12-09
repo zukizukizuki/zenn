@@ -3,7 +3,7 @@ title: "Terraform Stateで\"unsupported attribute\" エラーが発生した際�
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [AWS , Github , terraform]
-published: false
+published: true
 ---
 
 ## 問題の背景
