@@ -63,6 +63,7 @@ published: true
 
 **効果**：
 - S3コストは80TBに達していたため、不要データ削除で最低200,000円/月以上の大幅削減に成功しました。
+![削除実施以降の日時コスト](https://storage.googleapis.com/zenn-user-upload/4a22f4c784ac-20241216.png)
 
 ### 5. DynamoDBのプロビジョニングモード見直し
 **対応前の状況**：
