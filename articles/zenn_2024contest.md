@@ -111,7 +111,7 @@ published: true
 
 ### 2. NAT Gateway利用を極力抑えた構成の設計
 **対応前の状況**：
-- dev・stg・prd環境全てにNAT Gatewayを配置（prdの冗長構成含め計5台）。
+- dev・stg・prd環境全てにNAT Gatewayを配置（prdの冗長構成含め計4台）。
 - NAT Gatewayは時間課金+転送料が発生しコスト増要因。
 
 **施策内容**：
