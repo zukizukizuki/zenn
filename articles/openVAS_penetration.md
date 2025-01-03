@@ -2,7 +2,7 @@
 title: "OpenVAS(GSM)で始めるお手軽NW診断！AWS環境構築から脆弱性レポートまで"
 emoji: "🍅"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [AWS , GitHub Actions, Github , OIDC]
+topics: [AWS , セキュリティ, ホワイトハッカー , NW , NW診断]
 published: true
 ---
 
