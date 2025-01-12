@@ -1,5 +1,5 @@
 ---
-title: "【AWS】CloudWatch の不要なメトリクスが高額請求の原因に？Datadog 設定時の注意点と再発防止策"
+title: "【AWS】CloudWatch の不要なメトリクスが高額請求の原因に？注意点と再発防止策"
 emoji: "💭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [aws , CloudWatch, terraform , Datadog]
