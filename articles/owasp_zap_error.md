@@ -55,10 +55,10 @@ Error encountered. Please check manually for new updates.
 色々と試す中で、ZAPのプロキシ設定に複数の項目があることに気づき、混乱しました。
 
 **オプション > ネットワーク > HTTP プロキシ**
-[](https://storage.googleapis.com/zenn-user-upload/582ff47fbd80-20250115.png)
+[](https://storage.googleapis.com/zenn-user-upload/ee637902b044-20250115.png)
 
 **オプション > ネットワーク > Local Servers/Proxies**
-[](https://storage.googleapis.com/zenn-user-upload/ee637902b044-20250115.png)
+[](https://storage.googleapis.com/zenn-user-upload/582ff47fbd80-20250115.png)
 
 どちらを設定すれば良いのか分からず、両方設定してみたり、ポート番号を色々変えてみたりしましたが、状況はわりませんでした。
 
