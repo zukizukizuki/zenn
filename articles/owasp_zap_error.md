@@ -11,7 +11,8 @@ penetration testing tool として広く知られる OWASP ZAP (Zed Attack Proxy
 今回、私がAWS環境でOWASP ZAPを操作していた際に、まさにこのエラーに遭遇しました。同じように困っているの助けになればと思い、発生した事象、試したこと、そして最終的な解決策をまとめました。
 
 ## 環境
-AMI : [Debian 12 Web Desktop : Ultimate Sysadmin Toolset + Security Features](https://aws.mazon.com/marketplace/pp/prodview-r2juwnhaqmp5i?applicationId=AWS-Marketplace-Console&ef_=beagle&sr=0-1)インスタンスタイプ : t3.large
+AMI : [Debian 12 Web Desktop : Ultimate Sysadmin Toolset + Security Features](https://aws.mazon.com/marketplace/pp/prodview-r2juwnhaqmp5i?applicationId=AWS-Marketplace-Console&ef_=beagle&sr=0-1)
+インスタンスタイプ : t3.large
 
 ## 発生した事象：「ブラウザが見つかりません」エラー
 ZAPを起動し、メニューバーから「クイックスタート」を選択。「手動で探査」をクリックし、Firefoxを選択しところ、以下のエラーメッセージが表示されました。
@@ -55,10 +56,10 @@ Error encountered. Please check manually for new updates.
 色々と試す中で、ZAPのプロキシ設定に複数の項目があることに気づき、混乱しました。
 
 **オプション > ネットワーク > HTTP プロキシ**
-[](https://storage.googleapis.com/zenn-user-upload/ee637902b044-20250115.png)
+![](https://storage.googleapis.com/zenn-user-upload/bbfb956c5c1a-20250115.png)
 
 **オプション > ネットワーク > Local Servers/Proxies**
-[](https://storage.googleapis.com/zenn-user-upload/582ff47fbd80-20250115.png)
+![](https://storage.googleapis.com/zenn-user-upload/582ff47fbd80-20250115.png)
 
 どちらを設定すれば良いのか分からず、両方設定してみたり、ポート番号を色々変えてみたりしましたが、状況はわりませんでした。
 
