@@ -1,5 +1,5 @@
 ---
-title: "【解決済】node_modules を Lambda 関数 zip に含めるとgithub actionsに仕込んだ Terraform plan が走らない"
+title: "【解決済】node_modulesをLambdaに含めるとgithub actionsに仕込んだTerraform planが走らない"
 emoji: "❄️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [terraform , aws, lambda , github , github_actions]
