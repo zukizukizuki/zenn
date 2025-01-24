@@ -1,0 +1,44 @@
+---
+title: "【解決済】node_modules を Lambda 関数 zip に含めると Terraform plan が走らない"
+emoji: "❄️"
+type: "tech" # tech: 技術記事 / idea: アイデア
+topics: [terraform , aws, lambda , github , github_actions]
+published: true
+---
+
+## 発生した問題
+
+* **Terraform plan の失敗**: Lambda 関数のソースコードを zip ファイルにまとめる際、`node_modules` ディレクトリを含めた状態で `terraform plan` を実行すると、処理が非常に遅くなる、またはタイムアウトやエラーが発生して plan が完了しない。
+* **GitHub Actions CI/CD の停止**: 上記の状態の Terraform コードを GitHub Actions の CI/CD パイプラインで実行しても、パイプラインが正常に開始されず、ログも出力されないまま失敗する。
+
+## 原因
+
+* **zip ファイルサイズの肥大化**: `node_modules` ディレクトリは、多数のファイルと大きなサイズを持つため、zip ファイルに含めるとファイルサイズが非常に大きくなる。
+* **Terraform の処理負荷増大**: `archive_file` データソースが、肥大化した zip ファイル (特に `node_modules` 内の大量のファイル) を処理しようとする際に、Terraform 自体の処理負荷が著しく増大し、リソース不足やタイムアウトが発生する。
+* **GitHub Actions のリソース制限**: GitHub Actions の実行環境にはリソース制限があるため、Terraform plan の処理負荷が増大すると、リソース制限を超えてしまい、パイプラインが正常に動作しなくなる。ログが出力されなかったのは、Terraform plan の処理が開始される前に、リソース不足などで異常終了していたためと考えられる（詳細はログがないため推測）。
+
+## 解決策
+
+* **Lambda Layer の利用**: Lambda 関数の依存ライブラリ (`node_modules`) を Lambda Layer として分離し、Lambda 関数本体の zip ファイルには含めないように構成を変更する。
+* **Terraform での Lambda Layer 実装**:
+    * `archive_file` データソースを使用して、Lambda Layer 用の `node_modules` ディレクトリを zip ファイルとして作成。
+    * `aws_s3_object` リソースで zip ファイルを S3 バケットにアップロード。
+    * `aws_lambda_layer_version` リソースで Lambda Layer を定義 (S3 URI、互換ランタイムなどを指定)。
+    * `aws_lambda_function` リソースの `layers` 引数に Lambda Layer の ARN を指定して、Lambda 関数に Layer を紐付け。
+
+## ファインプレーだった点
+
+* GitHub Actions で CI/CD パイプラインがエラーログも出力せずに停止した際、**`node_modules` ディレクトリを削除** してローカル環境で `terraform plan` を実行するという**切り分け**を試したことが、問題の原因特定と解決に繋がった。
+    * 通常、CI/CD が動かない場合はログを確認することが first step となるが、今回はログが出力されなかったため、別の切り口で原因を探る必要があった。
+    * `node_modules` を削除するという**大胆な仮説**と**検証**が功を奏した。
+
+## 今後の対応
+
+* **Lambda 関数の `node_modules` は Lambda Layer で管理**: 今後 Terraform で Lambda 関数を管理する際は、Lambda 関数の依存ライブラリ (`node_modules`) は zip ファイルに含めず、Lambda Layer を利用してデプロイすることを標準とする。
+* **CI/CD 異常時はローカル環境での `terraform plan` 実行**: GitHub Actions で CI/CD パイプラインが正常に動作しない場合は、まずローカル環境で `terraform plan` を実行し、エラーメッセージや挙動を確認する。
+* **zip ファイルサイズと Terraform 処理負荷の考慮**: Terraform で Lambda 関数を扱う際は、zip ファイルサイズが肥大化しないように注意し、Terraform の処理負荷を下げる対策 (Lambda Layer の利用、zip ファイルの最適化など) を検討する。
+* **原因不明なエラーには大胆な仮説と検証**: エラーログが少ない場合や原因が特定できない場合は、固定観念にとらわれず、大胆な仮説を立てて検証することで、問題解決に繋がる場合があることを意識する。
+
+## まとめ
+
+今回の事象は、`node_modules` を Lambda 関数 zip に含めることによる zip ファイルの肥大化と、それに伴う Terraform の処理負荷増大が原因でした。Lambda Layer を利用することで、この問題を解決し、Terraform による Lambda 関数管理を効率化することができました。また、CI/CD パイプラインが異常停止した場合の切り分け方法として、ローカル環境での `terraform plan` 実行と、大胆な仮説検証が有効であることを学びました。
