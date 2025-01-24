@@ -8,8 +8,7 @@ published: true
 
 ## 発生した問題
 
-* **Terraform plan の失敗**: Lambda 関数のソースコードを zip ファイルにまとめる際、`node_modules` ディレクトリを含めた状態で `terraform plan` を実行すると、処理が非常に遅くなる、またはタイムアウトやエラーが発生して plan が完了しない。
-* **GitHub Actions CI/CD の停止**: 上記の状態の Terraform コードを GitHub Actions の CI/CD パイプラインで実行しても、パイプラインが正常に開始されず、ログも出力されないまま失敗する。
+* **github actionsが動かない**: Lambda 関数のソースコードを zip ファイルにまとめる際、`node_modules` ディレクトリを含めた状態でgithub_actionsに仕込んだ `terraform plan` を実行すると動作しないしログも出ない。なおCI/CDが動作する条件は満たしている。
 
 ## 原因
 
@@ -30,7 +29,7 @@ published: true
 
 * GitHub Actions で CI/CD パイプラインがエラーログも出力せずに停止した際、**`node_modules` ディレクトリを削除** してローカル環境で `terraform plan` を実行するという**切り分け**を試したことが、問題の原因特定と解決に繋がった。
     * 通常、CI/CD が動かない場合はログを確認することが first step となるが、今回はログが出力されなかったため、別の切り口で原因を探る必要があった。
-    * `node_modules` を削除するという**大胆な仮説**と**検証**が功を奏した。
+    * `node_modules` を削除するという**検証**が功を奏した。
 
 ## 今後の対応
 
