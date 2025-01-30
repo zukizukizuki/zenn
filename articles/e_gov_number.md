@@ -3,7 +3,7 @@ title: "マイクロ法人のオンライン事業所年金情報サービスの
 emoji: "🌀"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: [法人 , 電子送達, 事業所整理番号 , マイクロ法人]
-published: true
+published: false
 ---
 
 ## はじめに
