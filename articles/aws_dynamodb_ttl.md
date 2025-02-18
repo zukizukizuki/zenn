@@ -1,24 +1,22 @@
 ---
 title: "【AWS】DynamoDBでTTLに達したデータをS3 Glacierへアーカイブする構成"
-emoji: "🌪️"
+emoji: "🍷"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [AWS , ALB, terraform , WAF, SQLインジェクション]
 published: true
 ---
 
-## DynamoDB TTLデータをS3 Glacierへアーカイブする構成
-
-### 概要
+## 概要
 
 この構成は、IoTデバイスから送信されたデータをDynamoDBに格納し、設定したTTL（Time To Live）に基づいて自動的に削除されたデータを、低コストなS3 Glacierストレージにアーカイブするものです。
 
-### 目的
+## 目的
 
 *   **データ保持要件の遵守:** 一定期間経過したデータを削除する必要があるものの、監査や分析のために長期的な保管が必要な場合に、コスト効率よくデータを保持します。
 *   **コスト最適化:** アクティブに使用するデータは高速なDynamoDBに、アクセス頻度の低い過去データは低コストなS3 Glacierに保管することで、全体的なストレージコストを削減します。
 *   **運用負荷の軽減:** TTLによる自動削除と、削除されたデータの自動アーカイブにより、手動でのデータ管理作業を削減します。
 
-### 構成要素
+## 構成要素
 
 1.  **IoT Core (SQS):** IoTデバイスからのデータは、まずSQS (またはIoT Coreルールエンジン) を経由してLambda関数に渡されます。
 
@@ -32,26 +30,26 @@ published: true
 
 6.  **S3 Glacier:** 長期的なデータ保管に適した、低コストなストレージサービスです。アーカイブされたデータは、必要な場合に取得して分析などに利用できます。
 
-### 構成図
+## 構成図
 
-![](https://storage.googleapis.com/zenn-user-upload/7b762b3818d1-20250218.png)
+![](https://storage.googleapis.com/zenn-user-upload/017dba26ed62-20250218.png)
 
-### コード
+## コード
 
-#### SQS(IoT Core)からJSONを吸い上げてDynamoDBに入れるLambdaのterraform設定
+### SQS(IoT Core)からJSONを吸い上げてDynamoDBに入れるLambdaのterraform設定
 ```
-#######################
+################
 # lambdaのソースのzip
-#######################
+################
 data "archive_file" "function_archive" {
   type        = "zip"
   source_dir  = "${path.module}/lambda_putSensorData/"
   output_path = "${path.module}/lambda_putSensorData/output/functions.zip"
 }
 
-##########################################
+############################
 # IotデータをlambdaにキューするためのSQS
-##########################################
+############################
 resource "aws_sqs_queue" "ba_sqs" {
   name                       = "${var.environment}_ba_sqs"
   visibility_timeout_seconds = 900
@@ -72,9 +70,9 @@ resource "aws_sqs_queue" "ba_sqs" {
   })
 }
 
-#################################
+######################
 # S3に配置するlambdaソースのzip
-#################################
+######################
 resource "aws_s3_object" "lambda_zip" {
   bucket = aws_s3_bucket.lambda_bucket.bucket
   key    = "cross-account-${filemd5(data.archive_file.function_archive.output_path)}.zip"
@@ -84,9 +82,9 @@ resource "aws_s3_object" "lambda_zip" {
 }
 
 
-####################################
+########################
 # データを処理するためのlambda関数
-####################################
+########################
 resource "aws_lambda_function" "sensor_data_ingest_lambda" {
   architectures    = ["arm64"]
   function_name    = "${var.environment}-sensor-data-ingest"
@@ -120,9 +118,9 @@ resource "aws_lambda_function" "sensor_data_ingest_lambda" {
   }
 }
 
-#############################
+####################
 # lambdaのトリガー対象を指定
-#############################
+####################
 resource "aws_lambda_event_source_mapping" "sqs_source_mapping" {
   event_source_arn                   = aws_sqs_queue.ba_sqs.arn
   function_name                      = aws_lambda_function.sensor_data_ingest_lambda.arn
@@ -137,7 +135,7 @@ resource "aws_lambda_event_source_mapping" "sqs_source_mapping" {
 }
 ```
 
-#### SQS(IoT Core)からJSONを吸い上げてexpiredAt(TTL)を追加した上でDynamoDBに入れるLambda
+### SQS(IoT Core)からJSONを吸い上げてexpiredAt(TTL)を追加した上でDynamoDBに入れるLambda
 
 ```python
 import boto3
@@ -316,7 +314,7 @@ def convert_floats_to_decimals(obj):
     return obj
 ```
 
-#### DynamoDBのTerraform設定
+### DynamoDBのTerraform設定
 
 ```terraform
 resource "aws_dynamodb_table" "DeviceData" {
@@ -353,7 +351,7 @@ resource "aws_dynamodb_table" "DeviceData" {
 }
 ```
 
-#### TTLを迎えたデータをS3 GlacierにアーカイブするLambda
+### TTLを迎えたデータをS3 GlacierにアーカイブするLambda
 
 ```python
 import boto3
@@ -445,7 +443,7 @@ def lambda_handler(event, context):
     }
 ```
 
-#### S3バケットとLambda関数の設定
+### S3バケットとLambda関数の設定
 
 ```terraform
 resource "aws_s3_bucket" "archive_bucket" {
@@ -485,7 +483,7 @@ resource "aws_lambda_event_source_mapping" "dynamodb_trigger" {
 }
 ```
 
-### 補足
+## 補足
 *   `${var.environment}`は環境変数に合わせて変更してください。
 *   `data.aws_iam_role.for_lambda.arn`は、適切なIAMロールのARNに置き換えてください。
 *   上記は例であり、必要に応じて設定を調整してください。
