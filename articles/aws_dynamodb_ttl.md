@@ -2,7 +2,7 @@
 title: "【AWS】DynamoDBでTTLに達したデータをS3 Glacierへアーカイブする構成"
 emoji: "🍷"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [AWS , ALB, terraform , WAF, SQLインジェクション]
+topics: [AWS , DynamoDB, terraform , Python, lambda]
 published: true
 ---
 
