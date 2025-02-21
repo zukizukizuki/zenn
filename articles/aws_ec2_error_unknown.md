@@ -2,7 +2,7 @@
 title: "【AWS】構成不明なシステムのエラー対応をした話"
 emoji: "🌯"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [aws, error, ec2, cloud]
+topics: [aws, ELB, ec2, Flask ,nginx]
 published: true
 ---
 
