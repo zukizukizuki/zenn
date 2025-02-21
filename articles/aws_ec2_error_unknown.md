@@ -7,7 +7,6 @@ published: true
 ---
 
 ## 突然のSOS
-
 ある日突然、「**AWS上で動いているシステムで原因不明のエラーが出ているんだけど、AWS詳しいからちょっと見てくれない？**」と、なんともざっくりとした依頼が舞い込んできました。
 聞けば、2025/2/6 14:32頃に対象のwebアプリにブラウザからアクセスしたところエラーメッセージ「**403 Forbidden エラー**」。アクセスが拒否されていることを示すHTTPステータスコードですが、**なぜ403エラーが発生しているのか、原因は全く不明**とのこと。
 今回対応するシステムは構築にも運用にも携わっておらず**システム構成図もドキュメントも一切なし**。手探り状態からの調査でした。
@@ -20,7 +19,6 @@ AWSにおいて情報がない状態からの障害対応について参考に�
 **1. Cost Explorer で利用サービスを特定**
 手始めに、渡されたアクセスキーで AWS マネジメントコンソールにログインし、**Cost Explorer** を確認しました。
 
-<details><summary>Cost Explorer 画面イメージ (クリックで展開)</summary>
 ```mermaid
 graph LR
     A[Cost Explorer] --> B{サービスごとのコスト};
@@ -32,7 +30,6 @@ graph LR
     style D fill:#ccf,stroke:#333,stroke-width:1px
     style E fill:#ccf,stroke:#333,stroke-width:1px
 ```
-</details>
 
 Cost Explorer を確認したところ、**EC2 の課金額が高い** ことが分かりました。これで、エラーが出ているシステムが **EC2 上で提供されている** 可能性が高いと推測できました。
 
@@ -76,15 +73,12 @@ cat /var/log/syslog | grep gunicorn
 
 syslog を確認すると、Webアプリケーションサーバーである **Gunicorn** のログが出力されていることを確認。アプリケーションが Python 製である可能性が高まりました。しかし、syslog にも 403 エラーに関する情報は **見当たりません** でした。
 
-<details><summary>syslog の Gunicorn ログ例 (クリックで展開)</summary>
-
 ```
 Feb  6 05:32:45 [ホスト名] gunicorn[2156944]: INFO  2025-02-06 14:32:45,136 [app] Request: GET http://[example-domain.com]:443/[アプリケーション固有のエンドポイント]
 Feb  6 05:32:45 [ホスト名] gunicorn[2156944]: INFO  2025-02-06 14:32:45,159 [app] Response: 400 http://[example-domain.com]:443/[アプリケーション固有のエンドポイント]
 Feb  6 05:32:45 [ホスト名] gunicorn[2156944]: INFO  2025-02-06 14:32:45,539 [app] Request: GET http://[example-domain.com]:443/api/ping
 Feb  6 05:32:45 [ホスト名] gunicorn[2156944]: INFO  2025-02-06 14:32:45,545 [app] Response: 200 http://[example-domain.com]:443/api/ping
 ```
-</details>
 
 **6. アプリケーションログ設定を確認**
 Flask アプリケーションのログ設定を確認するため、`app.py` を探しました。
@@ -97,8 +91,6 @@ find / -type f | grep app.py
 また`/home/ubuntu/meter/apps/app.py` に `from flask import Flask`という記述があったのでFlaskである事が確定しました。
 
 そして`/home/ubuntu/meter/apps/logging_config.py`から、アプリケーションログが `/home/ubuntu/meter/logs/` ディレクトリに出力されていることを確認しました。
-
-<details><summary>/home/ubuntu/meter/apps/logging_config.py コード例 (クリックで展開)</summary>
 
 ```python
 from logging import DEBUG, INFO, config
@@ -126,12 +118,9 @@ config.dictConfig({
     },
 })
 ```
-</details>
 
 **7. アプリケーションログファイルを確認するも…やはりエラーは見当たらず**
 `/var/log/nginx` 配下、`/var/log/syslog` に加え、`/home/ubuntu/meter/logs/` 配下のアプリケーションログも確認しましたが、**403 エラーに関するエラーログはやはり見当たりません** でした。
-
-<details><summary>ログファイル確認コマンド例 (クリックで展開)</summary>
 
 ```bash
 # nginx error log
@@ -143,13 +132,11 @@ zgrep -E "(error|ERROR)" /var/log/syslog*
 # アプリケーションログ (meter/logs)
 grep -E "(error|ERROR)" /home/ubuntu/meter/logs/*
 ```
-</details>
 
 ## 突破口は nginx のログと ELB の存在
 再度 nginx アクセスログを確認すると、クライアントIPアドレスは **プライベートIPアドレス帯**。
 そうなるとプライベートサブネット内にある**ELB (Elastic Load Balancer) などのロードバランサーを経由** している可能性が高い。
 
-<details><summary>ELB構成図 (クリックで展開)</summary>
 ```mermaid
 graph LR
     A[インターネット] --> B(ELB);
@@ -157,7 +144,6 @@ graph LR
     style B fill:#f9f,stroke:#333,stroke-width:2px
     style C fill:#ccf,stroke:#333,stroke-width:1px
 ```
-</details>
 
 ここで冷静に考えると、もし Nginx が 403 エラーを返しているなら、Nginx エラーログにも何かしら記録が残るはずです。しかし、エラーログには何もなし。
 
@@ -175,7 +161,6 @@ graph LR
 
 **WAF (AWS WAF - Web Application Firewall) が設定されている** ことを発見！
 
-<details><summary>ELB コンソール WAF設定確認画面イメージ (クリックで展開)</summary>
 ```mermaid
 graph LR
     A[ELBコンソール] --> B{属性タブ};
@@ -183,7 +168,6 @@ graph LR
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style C fill:#ccf,stroke:#333,stroke-width:1px
 ```
-</details>
 
 WAF が原因である可能性が濃厚になってきました。
 
@@ -193,7 +177,6 @@ CloudWatch Logs を確認すると…
 
 **WAF が 403 エラーの原因となっているログ** をついに発見！
 
-<details><summary>CloudWatch Logs WAF ブロックログ例 (クリックで展開)</summary>
 ```
 {
   "action": "BLOCK",
@@ -217,7 +200,6 @@ CloudWatch Logs を確認すると…
   ... (ログ詳細) ...
 }
 ```
-</details>
 
 ログの内容から、WAF の特定のルールが `/app/admin` へのアクセスを不正と判断し、**ELBの手前で 403 Forbidden エラー** を返していたことが **判明** しました！
 
@@ -225,7 +207,6 @@ CloudWatch Logs を確認すると…
 今回の403 Forbidden エラーの原因は、**AWS WAF (Web Application Firewall) のルール設定ミス** でした。
 WAF のルール設定を見直し、**過剰に厳格になっていたルールを修正**。正常なアクセスを許可するように設定を変更しました。
 
-<details><summary>WAF ルール設定画面イメージ (クリックで展開)</summary>
 ```mermaid
 graph LR
     A[WAFコンソール] --> B{Web ACLs};
@@ -234,7 +215,6 @@ graph LR
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style C fill:#ccf,stroke:#333,stroke-width:1px
 ```
-</details>
 
 ## 対策
 
