@@ -56,12 +56,10 @@ grep '06/Feb/2025:14:32' /var/log/nginx/access.log
 
 nginx のアクセスログにも特段エラーに繋がる情報がありませんでした。
 
-<details><summary>nginx アクセスログ (クリックで展開)</summary>
 
 ```
 10.1.1.210 - - [06/Feb/2025:14:32:39 +0900] "GET /api/ping HTTP/1.1" 200 71 "-" "Mozilla/5.0 ..."
 ```
-</details>
 
 **5. syslog で Gunicorn のログを確認**
 詳細なエラー情報を得るため、システムログ (`/var/log/syslog`) を確認しました。
