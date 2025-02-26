@@ -6,6 +6,8 @@ topics: [github actions , コードレビュー , CodeRabbit , CI/CD , 自動化
 published: true
 ---
 
+![](https://storage.googleapis.com/zenn-user-upload/42216e16abc9-20250227.jpg)
+
 [この記事](https://zenn.dev/minedia/articles/7928ef7545b393)を参考に記載しました。
 AIレビューツール CodeRabbit (fluxninja/openai-pr-reviewer) を GitHub Actions に導入し、今後の運用に役立てるための手順とコストについて、2025年最新版としてまとめました。
 
