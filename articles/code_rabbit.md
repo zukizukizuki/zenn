@@ -2,7 +2,7 @@
 title: "【2025年最新版】AIレビューツール (CodeRabbit) 導入手順"
 emoji: "🐳"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [github actions , コードレビュー , terraform , CI/CD]
+topics: [github actions , コードレビュー , CodeRabbit , CI/CD , 自動化]
 published: true
 ---
 
