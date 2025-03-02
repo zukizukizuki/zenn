@@ -3,6 +3,7 @@ title: "zennの記事をQiitaにも同期する"
 emoji: ✨
 type: tech
 topics: ["zenn", "qiita", "sync"]
+published: true
 ---
 
 # zennの記事をQiitaにも同期する
