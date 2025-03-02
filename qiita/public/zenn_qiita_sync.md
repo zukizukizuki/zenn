@@ -1,14 +1,15 @@
 ---
 title: zennの記事をQiitaにも同期する
-private: false
 tags:
-  - zenn
-  - qiita
+  - Qiita
   - sync
-updated_at: '2025-03-02T08:59:15.486Z'
-id: null
+  - Zenn
+private: false
+updated_at: '2025-03-02T17:59:24+09:00'
+id: 773ea061b9c0875922e1
 organization_url_name: null
 slide: false
+ignorePublish: false
 ---
 
 # zennの記事をQiitaにも同期する
