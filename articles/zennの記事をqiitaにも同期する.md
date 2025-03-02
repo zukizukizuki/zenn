@@ -107,4 +107,3 @@ topics: ["zenn", "qiita", "sync"]
               qiita-token: ${{ secrets.QIITA_TOKEN }}
     ```
 5.  Zennに記事を作成し、mainブランチにpushすると、GitHub Actions が実行され、Qiitaに記事が同期されることを確認します。
-6.  Qiitaで記事が正しく同期されていることを確認します。
