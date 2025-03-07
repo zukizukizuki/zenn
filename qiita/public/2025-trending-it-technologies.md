@@ -1,16 +1,17 @@
 ---
 title: 2025年覇権を握る技術 3選
-private: false
 tags:
   - AI
+  - IT
+  - トレンド
   - Web3
   - Metaverse
-  - トレンド
-  - IT
-updated_at: '2025-03-07T08:37:40.659Z'
-id: null
+private: false
+updated_at: '2025-03-07T17:37:51+09:00'
+id: a554ab979ba8cd7e774a
 organization_url_name: null
 slide: false
+ignorePublish: false
 ---
 
 # 2025年トレンドIT技術
