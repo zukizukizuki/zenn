@@ -3,7 +3,7 @@ title: "2025年覇権を握る技術 3選"
 emoji: "🚀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AI", "Web3", "Metaverse", "トレンド", "IT"]
-published: false
+published: true
 ---
 
 # 2025年トレンドIT技術
