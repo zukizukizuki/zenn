@@ -1,16 +1,15 @@
 ---
 title: OpenHandsを導入してAIアシスタントを活用する方法
-tags:
-  - GitHub
-  - Docker
-  - AI
-  - OpenHands
 private: false
+tags:
+  - OpenHands
+  - AI
+  - Docker
+  - GitHub
 updated_at: '2025-03-07T16:46:21+09:00'
 id: e8e0e4fa41e51f398af1
 organization_url_name: null
 slide: false
-ignorePublish: false
 ---
 
 ## OpenHandsとは
@@ -43,7 +42,7 @@ docker run -it --rm --pull=always `
     docker.all-hands.dev/all-hands-ai/openhands:0.27
 ```
 
-※ Windows powershellでは、バックスラッシュ（`\`）ではなくキャレット（`）を使用して複数行のコマンドを記述します。
+※ Windows powershellでは、バックスラッシュ（`\`）ではなく（`）を使用して複数行のコマンドを記述します。
 
 ### 2. GitHub Personal Access Tokenの取得
 
