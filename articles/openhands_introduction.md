@@ -36,7 +36,7 @@ docker run -it --rm --pull=always `
     docker.all-hands.dev/all-hands-ai/openhands:0.27
 ```
 
-※ Windows powershellでは、バックスラッシュ（`\`）ではなくキャレット（`）を使用して複数行のコマンドを記述します。
+※ Windows powershellでは、バックスラッシュ（`\`）ではなく（`）を使用して複数行のコマンドを記述します。
 
 ### 2. GitHub Personal Access Tokenの取得
 
