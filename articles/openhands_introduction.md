@@ -55,11 +55,26 @@ OpenHandsをGitHubと連携させるには、GitHub Personal Access Token (PAT) 
 8. 「Generate token」をクリック
 9. 表示されたトークンをコピーして安全な場所に保存（このトークンは再表示されないので注意）
 
-### 3. Claude API Keyの作成
+### 3. API Keyの作成
 
-OpenHandsはClaude AIを利用するため、Anthropic社のAPI Keyが必要です。
-※Gemini、ChatGPT、deepseekでもOKです
+OpenHandsはClaude AIを利用するため、API Keyが必要です。
 
+#### Gemini APIキーの取得手順
+1. **Google Cloud Platform (GCP) プロジェクトの作成**:
+   - Google Cloud Platform ([https://cloud.google.com/](https://cloud.google.com/)) にアクセスし、Googleアカウントでログインします。
+   - プロジェクトを作成します（まだプロジェクトがない場合）。プロジェクト名は任意で構いません。
+
+2. **Gemini API の有効化**:
+   - GCPのコンソール画面で、左上のメニューから「APIとサービス」 > 「有効なAPIとサービス」を選択します。
+   - 「+ APIとサービスの有効化」をクリックし、検索窓に「Gemini API」と入力して検索します。
+   - 「Gemini API」をクリックし、「有効にする」ボタンをクリックします。
+
+3. **APIキーの作成**:
+   - GCPのコンソール画面で、左上のメニューから「APIとサービス」 > 「認証情報」を選択します。
+   - 「+ 認証情報を作成」をクリックし、「APIキー」を選択します。
+   - APIキーが生成されます。このAPIキーはOpenHandsからGemini APIを呼び出す際に使用しますので、安全に保管してください。
+
+#### Anthropic APIキーの取得手順
 1. [Anthropicのウェブサイト](https://www.anthropic.com/)にアクセスし、アカウントを作成またはログイン
 2. ダッシュボードから「API Keys」セクションに移動
 3. 「Create API Key」をクリック
