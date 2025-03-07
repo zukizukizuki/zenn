@@ -1,15 +1,16 @@
 ---
 title: OpenHandsを導入してAIアシスタントを活用する方法
-private: false
 tags:
-  - OpenHands
-  - AI
-  - Docker
   - GitHub
-updated_at: '2025-03-03T08:59:33+09:00'
+  - Docker
+  - AI
+  - OpenHands
+private: false
+updated_at: '2025-03-07T16:46:21+09:00'
 id: e8e0e4fa41e51f398af1
 organization_url_name: null
 slide: false
+ignorePublish: false
 ---
 
 ## OpenHandsとは
