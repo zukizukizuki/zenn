@@ -1,5 +1,5 @@
 ---
-title: "【悪用厳禁】EC2 Instance ConnectでSSHキー、パスワード無しでログイン"
+title: "【悪用厳禁】EC2 にSSHキー、パスワード無しでログイン"
 emoji: "🌺"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [aws, ec2, SSH ,Linux]
