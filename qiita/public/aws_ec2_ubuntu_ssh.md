@@ -1,15 +1,16 @@
 ---
 title: 【悪用厳禁】EC2 Instance ConnectでSSHキー、パスワード無しでログイン
-private: false
 tags:
-  - aws
-  - ec2
-  - SSH
   - Linux
-updated_at: '2025-03-18T07:36:59.798Z'
-id: null
+  - AWS
+  - SSH
+  - EC2
+private: false
+updated_at: '2025-03-18T16:37:12+09:00'
+id: 6d67cfc9f1c73df20703
 organization_url_name: null
 slide: false
+ignorePublish: false
 ---
 
 このIAMポリシーをユーザーにアタッチすることで、**EC2 Instance Connectをサポートする様々なLinuxディストリビューション**において、SSHキーやパスワードなしでEC2インスタンスにログインできるようになります。
