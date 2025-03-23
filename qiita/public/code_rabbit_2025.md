@@ -23,6 +23,7 @@ AIレビューツール CodeRabbit (fluxninja/openai-pr-reviewer) を GitHub Act
 **前提条件:**
 
 * **OpenAI APIキー:** OpenAI API を利用するためのAPIキーが必要です。OpenAI Platform ([https://platform.openai.com/](https://platform.openai.com/)) でアカウントを作成し、APIキーを発行してください。
+* **OpenAI クレジットの確保:** OpenAI のクレジットを消費してレビューするので ([https://platform.openai.com/settings/organization/billing/overview](https://platform.openai.com/settings/organization/billing/overview)) で設定する必要があります。
 * **GitHubアカウント:** CodeRabbit を導入する GitHub リポジトリへの管理者権限が必要です。
 
 **手順:**
@@ -60,6 +61,8 @@ jobs:
         review_comment_lgtm: false
         openai_light_model: gpt-3.5-turbo
         openai_heavy_model: gpt-4
+        openai_timeout_ms: 300000
+        language: ja-JP
         system_message: |
           あなたは `@openai` (a.k.a. `github-actions`) です。
           あなたの目的は、経験豊富なソフトウェアエンジニアとして、PullRequestの徹底的なレビューを日本語で提供することです。
