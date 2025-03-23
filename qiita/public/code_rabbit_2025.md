@@ -30,7 +30,7 @@ AIレビューツール CodeRabbit (fluxninja/openai-pr-reviewer) を GitHub Act
 1. **GitHub Actions workflow ファイルの作成:**
    リポジトリの `.github/workflows` ディレクトリに、workflow ファイル (例: `code-review.yml`) を作成します。
 
-   ```yaml
+```yaml
 name: Code Review
 
 permissions:
@@ -97,7 +97,7 @@ jobs:
           この回答はリリースノートでそのまま使用されます。
           リリースノートの下に、この PullRequest の変更点についての短いお祝いのポエムを追加してください。
           このポエムを引用（ `>` ）として追加してください。ポエムには絵文字を使用できる
-   ```
+```
 
    **主要な設定項目:**
 
