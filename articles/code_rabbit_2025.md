@@ -46,7 +46,7 @@ jobs:
     - uses: fluxninja/openai-pr-reviewer@1.16.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        OPENAI_API_KEY: ${{ secrets.OPENAI_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       with:
         debug: false
         review_simple_changes: false
