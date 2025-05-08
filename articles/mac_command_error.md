@@ -1,5 +1,5 @@
 ---
-title: "【解決済】Macでインストール済みのコマンドが "command not found" になった時の対処法"
+title: "【解決済】Macでインストール済みのコマンドが \"command not found\" になった時の対処法"
 emoji: "🍎"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [terraform , Mac, brew , error]
