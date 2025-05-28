@@ -74,3 +74,5 @@ jobs:
         uses: C-Naoki/zenn-qiita-sync@main
         with:
           qiita-token: ${{ secrets.QIITA_TOKEN }}
+          update-existing: true
+          cleanup-deleted: true
