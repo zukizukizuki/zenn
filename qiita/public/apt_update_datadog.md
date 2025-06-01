@@ -1,16 +1,15 @@
 ---
 title: 【Ubuntu 20.04】apt updateしたらDatadog GPG キーエラーが出る件
-tags:
-  - Ubuntu
-  - apt
-  - gpg
-  - Datadog
 private: false
+tags:
+  - ubuntu
+  - datadog
+  - GPG
+  - apt
 updated_at: '2025-03-06T18:15:28+09:00'
 id: f6e77ad017ad9c784fdb
 organization_url_name: null
 slide: false
-ignorePublish: false
 ---
 
 Ubuntu システムで Datadog エージェントをインストールまたはアップデートしようとした際に、`apt update` で以下のようなエラーが発生することがあります。
