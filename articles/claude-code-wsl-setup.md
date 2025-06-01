@@ -156,7 +156,7 @@ code .
 echo 'alias ll="ls -alF"' >> ~/.bashrc
 echo 'alias la="ls -A"' >> ~/.bashrc
 echo 'alias l="ls -CF"' >> ~/.bashrc
-echo 'alias cc="claude-code"' >> ~/.bashrc
+echo 'alias cc="claude"' >> ~/.bashrc
 source ~/.bashrc
 ```
 

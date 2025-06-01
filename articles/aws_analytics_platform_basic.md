@@ -155,12 +155,67 @@ job.commit()
 
 ---
 
-## 7. 手順4: Amazon Athenaでクエリ環境の構築
+## 7. 手順4: 加工後データのカタログ登録
+
+### 加工後データ用クローラーの作成
+
+ETL処理で生成されたParquetファイルをAthenaでクエリするため、加工後データ用のクローラーを作成します。
+
+```bash
+# 加工後データ用のクローラーを作成
+aws glue create-crawler \
+    --name processed-data-crawler \
+    --role AWSGlueServiceRole-analytics \
+    --database-name analytics_database \
+    --targets '{"S3Targets":[{"Path":"s3://your-analytics-datalake-bucket/processed-data/sales/"}]}'
+```
+
+### 加工後データクローラーの実行
+
+```bash
+# クローラーの実行
+aws glue start-crawler --name processed-data-crawler
+
+# クローラー実行状況の確認
+aws glue get-crawler --name processed-data-crawler
+```
+
+---
+
+## 8. 手順5: Amazon Athenaでクエリ環境の構築
 
 ### Athenaの初期設定
 
 1. Athenaコンソールにアクセス
 2. クエリ結果の保存場所を設定: `s3://your-analytics-datalake-bucket/query-results/`
+
+### テーブル存在確認
+
+ビューを作成する前に、加工後データのテーブルがData Catalogに正しく登録されているか確認します。
+
+```sql
+-- データベース内のテーブル一覧を確認
+SHOW TABLES IN analytics_database;
+
+-- 加工後データテーブルの構造確認
+DESCRIBE analytics_database.processed_data_sales;
+
+-- データの存在確認
+SELECT COUNT(*) FROM analytics_database.processed_data_sales LIMIT 10;
+```
+
+**注意**: もし `processed_data_sales` テーブルが存在しない場合は、以下を確認してください：
+1. ETLジョブが正常に完了しているか
+2. 加工後データ用クローラー（processed-data-crawler）が実行済みか
+3. S3の加工後データフォルダにParquetファイルが出力されているか
+
+```bash
+# S3の加工後データ確認
+aws s3 ls s3://your-analytics-datalake-bucket/processed-data/sales/ --recursive
+
+# クローラーの再実行（必要に応じて）
+aws glue start-crawler --name processed-data-crawler
+```
 
 ### サンプルクエリの実行
 
@@ -179,6 +234,8 @@ ORDER BY month;
 
 ### ビューの作成
 
+テーブルの存在確認完了後、分析用ビューを作成します。
+
 ```sql
 -- 月次売上サマリビューの作成
 CREATE VIEW monthly_sales_summary AS
@@ -193,7 +250,7 @@ GROUP BY DATE_FORMAT(sale_date, '%Y-%m');
 
 ---
 
-## 8. 手順5: Amazon QuickSightでダッシュボード作成
+## 9. 手順6: Amazon QuickSightでダッシュボード作成
 
 ### QuickSightの初期設定
 
@@ -220,7 +277,7 @@ GROUP BY DATE_FORMAT(sale_date, '%Y-%m');
 
 ---
 
-## 9. 運用とモニタリング
+## 10. 運用とモニタリング
 
 ### CloudWatchでのモニタリング設定
 
@@ -241,7 +298,7 @@ aws events put-rule \
 
 ---
 
-## 10. セキュリティとコスト最適化
+## 11. セキュリティとコスト最適化
 
 ### IAMロールの設定
 
@@ -279,7 +336,7 @@ aws events put-rule \
 
 ---
 
-## 11. トラブルシューティング
+## 12. トラブルシューティング
 
 ### よくある問題と解決方法
 
@@ -301,7 +358,7 @@ LOCATION 's3://your-analytics-datalake-bucket/processed-data/sales/year=2024/mon
 
 ---
 
-## 12. まとめ
+## 13. まとめ
 
 本記事で紹介した構成は、AWSにおける分析基盤の基本パターンです。
 
