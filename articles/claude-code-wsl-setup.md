@@ -89,21 +89,11 @@ npm --version
 npm install -g @anthropic-ai/claude-code
 ```
 
-### 3.2 APIキーの設定
-
-Claude CodeにはAnthropic APIキーが必要です：
-
-```bash
-# 環境変数として設定
-echo 'export ANTHROPIC_API_KEY="your-api-key-here"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-### 3.3 初回起動と設定
+### 3.2 初回起動と設定
 
 ```bash
 # Claude Codeの起動
-claude-code
+claude
 
 # 初回起動時に表示される設定ダイアログに従って設定を完了
 ```
