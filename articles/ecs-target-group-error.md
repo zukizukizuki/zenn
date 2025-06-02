@@ -1,4 +1,10 @@
-# ECSサービスのターゲットグループ設定ミス調査・修正手順
+---
+title: "ECSサービスのターゲットグループ設定ミスでハマった話"
+emoji: "🦏"
+type: "tech" # tech: 技術記事 / idea: アイデア
+topics: [ubuntu , linux , rc.local , bash]
+published: true
+---
 
 ## 概要
 
