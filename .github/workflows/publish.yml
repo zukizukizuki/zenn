@@ -35,25 +35,21 @@ jobs:
           # Create an empty file first to ensure it exists even if no files match
           touch $GITHUB_WORKSPACE/changed_files.txt
           
-          # Try to find changed markdown files, but don't fail if none are found
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "^articles/.*\.md$" > $GITHUB_WORKSPACE/changed_files.txt || true
-          
-          # If running manually or if before/after SHAs aren't available, check the last commit
-          if [ -z "${{ github.event.before }}" ] || [ "$(wc -l < $GITHUB_WORKSPACE/changed_files.txt)" -eq 0 ]; then
-            echo "No files found in normal diff, checking last commit..."
+          # 最新コミットのみで変更された記事ファイルを検出
+          if [ -n "${{ github.event.before }}" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            # 通常のプッシュ: 前回のコミットから今回のコミットまでの差分
+            git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "^articles/.*\.md$" > $GITHUB_WORKSPACE/changed_files.txt || true
+          else
+            # 初回プッシュまたは手動実行: 最新コミットのみの変更
             git diff --name-only HEAD~1 HEAD | grep "^articles/.*\.md$" > $GITHUB_WORKSPACE/changed_files.txt || true
-          fi
-          
-          # If still no files found and this is a PR for a specific article, add it manually
-          if [ "$(wc -l < $GITHUB_WORKSPACE/changed_files.txt)" -eq 0 ] && [[ "${{ github.event.pull_request.title }}" == *"#"* ]]; then
-            PR_NUM=$(echo "${{ github.event.pull_request.title }}" | grep -o '#[0-9]*' | tr -d '#')
-            if [ -n "$PR_NUM" ] && [ -f "articles/openhands_introduction.md" ]; then
-              echo "articles/openhands_introduction.md" > $GITHUB_WORKSPACE/changed_files.txt
-            fi
           fi
           
           echo "📋 Changed markdown files:"
           cat $GITHUB_WORKSPACE/changed_files.txt
+          
+          # 重複防止のため、ファイルの重複を除去
+          sort -u $GITHUB_WORKSPACE/changed_files.txt > $GITHUB_WORKSPACE/changed_files_unique.txt
+          mv $GITHUB_WORKSPACE/changed_files_unique.txt $GITHUB_WORKSPACE/changed_files.txt
           
           # Set output variable to indicate if we found any files
           if [ "$(wc -l < $GITHUB_WORKSPACE/changed_files.txt)" -gt 0 ]; then
@@ -75,4 +71,5 @@ jobs:
         with:
           qiita-token: ${{ secrets.QIITA_TOKEN }}
           update-existing: true
-          cleanup-deleted: true
+          cleanup-deleted: false
+          dry-run: false
