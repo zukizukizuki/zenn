@@ -1,8 +1,8 @@
 ---
 title: "独自ドメインメールをCloudflare Email Routingで無料構築する方法"
-emoji: "🐧"
+emoji: "📨"
 type: "tech"
-topics: ["wsl", "claude", "ai", "windows", "setup"]
+topics: ["Cloudflare", "Route53", "mail", "smtp", "個人開発"]
 published: true
 ---
 
