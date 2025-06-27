@@ -1,6 +1,6 @@
 ---
 title: "TerraformでDifyをノンダウンタイム構成で作った話"
-emoji: "👨‍✈️"
+emoji: "👊"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [Dify , AI, AWS , クラウド ,terraform]
 published: true
