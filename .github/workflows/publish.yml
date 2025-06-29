@@ -32,25 +32,29 @@ jobs:
       - name: Get changed markdown files
         id: files
         run: |
-          # Create an empty file first to ensure it exists even if no files match
           touch $GITHUB_WORKSPACE/changed_files.txt
-          
-          # 最新コミットのみで変更された記事ファイルを検出
-          if [ -n "${{ github.event.before }}" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
-            # 通常のプッシュ: 前回のコミットから今回のコミットまでの差分
-            git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "^articles/.*\.md$" > $GITHUB_WORKSPACE/changed_files.txt || true
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            # 手動実行: 全ての記事ファイルを対象
+            echo "Running manually, targeting all articles."
+            find articles -type f -name "*.md" > $GITHUB_WORKSPACE/changed_files.txt
           else
-            # 初回プッシュまたは手動実行: 最新コミットのみの変更
-            git diff --name-only HEAD~1 HEAD | grep "^articles/.*\.md$" > $GITHUB_WORKSPACE/changed_files.txt || true
+            # Push実行: 変更があった記事ファイルのみを対象
+            echo "Running on push, targeting changed articles."
+            if [ -n "${{ github.event.before }}" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+              git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "^articles/.*\.md$" > $GITHUB_WORKSPACE/changed_files.txt || true
+            else
+              git diff --name-only HEAD~1 HEAD | grep "^articles/.*\.md$" > $GITHUB_WORKSPACE/changed_files.txt || true
+            fi
           fi
-          
-          echo "📋 Changed markdown files:"
+
+          echo "📋 Target markdown files:"
           cat $GITHUB_WORKSPACE/changed_files.txt
-          
+
           # 重複防止のため、ファイルの重複を除去
           sort -u $GITHUB_WORKSPACE/changed_files.txt > $GITHUB_WORKSPACE/changed_files_unique.txt
           mv $GITHUB_WORKSPACE/changed_files_unique.txt $GITHUB_WORKSPACE/changed_files.txt
-          
+
           # Set output variable to indicate if we found any files
           if [ "$(wc -l < $GITHUB_WORKSPACE/changed_files.txt)" -gt 0 ]; then
             echo "found_files=true" >> $GITHUB_OUTPUT
