@@ -2,32 +2,20 @@
 title: "【AWS】DKIM設定が突然無効化された話"
 emoji: "💀"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [AWS , SES, DKIM, メール]
+topics: [AWS , SES, DKIM, メール, DNS, CloudFlare]
 published: true
 ---
 
-## はじめに
-
-ブログを運営していて、お問い合わせフォームからのメール送信にAWS SESを利用しています。ある日突然、メール送信でエラーが発生するようになりました。調査してみると、AWS SESのDKIM設定が無効化されていることが判明しました。
-
-この記事では、その原因調査から解決までの過程を記録として残します。
-
-## 発生した問題
-
-### 症状
-- お問い合わせフォームからのメール送信でエラーが発生
-- AWS SESコンソールでDKIM設定が「保留中」になっている
-
-### AWSからの通知メール
+## キッカケ：AWSからの通知メール
 
 最初に以下のようなメールがAWSから届いていました：
 
 ```
-We detected that the DNS records required for the DKIM setup of [ドメイン名] are no longer present in your DNS settings.
+We detected that the DNS records required for the DKIM setup of example.com are no longer present in your DNS settings.
 
-To protect your email deliverability, we have temporarily disabled DKIM signing for emails originating from [ドメイン名].
+To protect your email deliverability, we have temporarily disabled DKIM signing for emails originating from example.com.
 
-If the removal of the DNS records was intentional, you do not need to take any additional action. In 5 days, [ドメイン名] will no longer be considered to be configured for the purpose of DKIM signing.
+If the removal of the DNS records was intentional, you do not need to take any additional action. In 5 days, example.com will no longer be considered to be configured for the purpose of DKIM signing.
 
 If it was unintentional, please restore the DNS records to your DNS settings within 5 days.
 ```
@@ -35,8 +23,31 @@ If it was unintentional, please restore the DNS records to your DNS settings wit
 そして5日後：
 
 ```
-Since 5 days have elapsed and the DNS records have not been restored, Amazon SES and Amazon Pinpoint will no longer consider [ドメイン名] to be configured for the purpose of DKIM signing.
+Since 5 days have elapsed and the DNS records have not been restored, Amazon SES and Amazon Pinpoint will no longer consider example.com to be configured for the purpose of DKIM signing.
 ```
+
+さらに3日間の検証失敗後：
+
+```
+We have been attempting to verify the DKIM setup of example.com for the last 3 days. We have not been able to detect the required DNS records in your DNS settings.
+```
+
+## 発生した問題
+
+### 症状
+- お問い合わせフォームからのメール送信でエラーが発生
+- AWS SESコンソールでDKIM設定が「保留中」になっている
+- ドメイン検証エラー：「DNS サーバーが指定されたドメイン名を見つけることができませんでした」
+
+### DNS移行の背景
+
+今回の問題の発端は、**独自ドメインメール**を設定するためにDNSプロバイダーをRoute53からCloudflareに移行したことでした。
+
+独自ドメインメール設定の流れ：
+1. **メールサービスの検討** - Gmail、Outlook等でのカスタムドメイン利用
+2. **DNS管理の見直し** - より柔軟なDNS管理のためCloudflareを選択
+3. **Route53からCloudflareへの移行** - ネームサーバー変更とレコード移行
+4. **AWS SES設定の引き継ぎ** - 既存のメール送信機能の維持
 
 ## 原因調査
 
@@ -50,77 +61,165 @@ Since 5 days have elapsed and the DNS records have not been restored, Amazon SES
 
 結果：該当するイベントは見つかりませんでした。
 
-### 現状確認
+### DNS設定の確認
 
-Route53のコンソールを確認すると、DKIMに必要なCNAMEレコードは**存在している**状態でした：
+#### Cloudflare（現在のDNSプロバイダー）
+必要なレコードは正しく設定されていました：
 
 ```
-pzrbrkmsxosgxifdheh3jkmxtrqsltbk._domainkey.[ドメイン名] → [hash].dkim.amazonses.com
-ximwiugqvcs46ogvtfzagkdtfeysmfpx._domainkey.[ドメイン名] → [hash].dkim.amazonses.com
-emafy4errojen5squeaq4l2x4gzadr4x._domainkey.[ドメイン名] → [hash].dkim.amazonses.com
+# DKIMレコード（3つ）
+[selector1]._domainkey.example.com → [selector1].dkim.amazonses.com
+[selector2]._domainkey.example.com → [selector2].dkim.amazonses.com
+[selector3]._domainkey.example.com → [selector3].dkim.amazonses.com
+
+# カスタムMAIL FROMドメイン
+mail.example.com MX → 10 feedback-smtp.ap-northeast-1.amazonses.com
+mail.example.com TXT → "v=spf1 include:amazonses.com ~all"
+
+# DMARC
+_dmarc.example.com TXT → "v=DMARC1; p=none;"
 ```
 
-## 根本原因の調査
+すべて「DNS のみ」（プロキシ無効）で設定済みでした。
 
-この問題について調査したところ、**AWSの一般的な動作**であることが判明しました。
+#### Route53（旧DNSプロバイダー）の確認
 
-### AWSの定期チェック機能
+ここで**重大な発見**がありました。Route53に**古いDKIMレコード**が残っていました：
 
-AWS公式ドキュメント¹によると：
+```
+# 古いDKIMレコード（削除し忘れ）
+[old-selector1]._domainkey.example.com
+[old-selector2]._domainkey.example.com
+```
 
-> Amazon SES can no longer find the required CNAME records (if you used Easy DKIM) or the required TXT record (if you used BYODKIM) records on your DNS server. The notification email will inform you of the length of time in which you must re-publish the DNS records before your DKIM setup status is revoked and DKIM signing is disabled.
+## 根本原因：DNS権威サーバーの競合
 
-AWSは定期的にDKIMのDNSレコードの存在確認を行っており、何らかの理由でレコードが見つからなくなると警告メールを送信し、5日間の猶予期間後にDKIM署名を無効化します。
+### DNS移行時の見落とし
 
-### よくある原因
+独自ドメインメール設定に集中するあまり、既存のAWS SES関連レコードの完全な移行を見落としていました：
 
-コミュニティでの報告²³⁴を調査した結果、以下のような原因が考えられます：
+**移行対象として認識していたレコード**：
+- A, AAAA, CNAME（ウェブサイト用）
+- MX, TXT（メール用）
+- NS, SOA（基本レコード）
 
-1. **DNS伝播の一時的な問題** - DNSレコードが一時的に到達不能になる
-2. **DNSサーバーの応答エラー** - SERVFAILエラーなど
-3. **Route53での設定変更時の副作用** - 他の設定変更時にレコードが一時的に見えなくなる
-4. **自動化ツールによる意図しない変更**
+**見落としていたレコード**：
+- AWS SESのDKIMレコード（`._domainkey`サブドメイン）
+- 過去に設定したSES関連のカスタムレコード
 
-実際に、MailWizzフォーラムでは「何も触っていないのにDKIMが無効化された」という同様の報告があり、レコードを削除・再追加することで解決したという事例が報告されています⁴。
+### 問題の構造
+
+DNS移行時に発生した問題：
+
+1. **ネームサーバー**: Cloudflareに変更済み ✅
+2. **新しいDKIMレコード**: Cloudflareに追加済み ✅  
+3. **古いDKIMレコード**: Route53に残存 ❌
+
+### なぜ問題が発生したのか
+
+AWSのDKIM検証プロセスが：
+
+1. **複数のDNSサーバーを参照**（権威サーバー分散の確認）
+2. **Cloudflare**: 新しいDKIMレコードを返す
+3. **Route53**: 古いDKIMレコード（または削除済みレコード）を返す
+4. **異なる応答により検証失敗**
+
+### DNS移行時の一般的な落とし穴
+
+DNS移行時によくある問題：
+- 旧DNSプロバイダーに古いレコードが残存
+- 異なるDNSサーバーが異なる応答を返す
+- AWSなどのサービスが複数のDNSサーバーをチェックして混乱
 
 ## 解決方法
 
-### 1. 現状のレコード確認
+### Route53の古いレコードを完全削除
 
-まず、Route53でDKIMレコードが正しく設定されているか確認します。
+**最も重要な対処法**：
 
-### 2. レコードの再設定
+1. **Route53にログイン**
+2. **該当ドメインのホストゾーンを開く**
+3. **以下の古いDKIMレコードを削除**：
+   - `[old-selector1]._domainkey.example.com`
+   - `[old-selector2]._domainkey.example.com`
+   - その他のAWS SES関連の古いレコード
 
-以下の手順でDKIMレコードを再設定します：
+### DNS伝播の確認
 
-1. **Route53で現在のDKIMレコードを削除**
-   - 3つのCNAMEレコードをすべて削除
+レコード削除後、以下で確認：
 
-2. **SESコンソールで新しいレコードを生成**
-   - SESコンソール → 認証 → DKIM → 編集
-   - 「保存」をクリックして新しいレコードを生成
+```bash
+# 古いレコードが削除されたことを確認
+dig CNAME [old-selector1]._domainkey.example.com
+# → 応答が「NXDOMAIN」になれば削除完了
 
-3. **新しいCNAMEレコードをRoute53に追加**
-   - SESで表示される3つのCNAMEレコードをすべて追加
+# 新しいレコードが正常に応答することを確認
+dig CNAME [selector1]._domainkey.example.com
+```
 
-### 3. 検証
+### AWSでの検証完了を待機
 
-設定後、通常は数分から数時間でDKIMが「検証済み」になります。
+古いレコード削除後：
+- **15分〜2時間**: DNS伝播完了
+- **数時間以内**: AWS SESでDKIM検証完了
+- **結果**: 「検証済み」ステータスに変更、メール送信復旧
 
-> **注意**: SESコンソールで「検証済み」と表示されていれば、外部のDKIMチェックツールが認識しなくても実際には正常に動作している場合があります⁵。
+## 実際の解決過程
+
+### タイムライン
+
+1. **Route53の古いDKIMレコード6件を削除**
+2. **約30分後**: AWS SESのDKIM設定が「検証済み」に変更
+3. **ドメインIDステータス**: 「検証済み」に変更
+4. **メール送信テスト**: 正常動作を確認
+
+### 最終的な設定状態
+
+```
+✅ DKIM設定: 検証済み
+✅ ドメインIDステータス: 検証済み  
+✅ メール送信: 正常動作
+✅ DNS権威: Cloudflareに統一
+```
+
+## 学んだ教訓
+
+### DNS移行時のベストプラクティス
+
+1. **旧DNSプロバイダーの完全クリーンアップ**
+   - すべてのレコードを確実に削除
+   - 特にサードパーティサービス関連のレコード
+
+2. **移行後の検証**
+   - 複数のDNSサーバーから応答確認
+   - サービス連携の動作確認
+
+3. **段階的な移行**
+   - 重要なサービスは移行前後でテスト実施
+   - ロールバック計画の準備
+
+### AWS SESの特性理解
+
+- **複数DNSサーバーをチェック**する検証プロセス
+- **権威サーバーの一貫性**が重要
+- **最大72時間**の検証期間設定
 
 ## まとめ
 
-今回の問題は、AWSが提供する保護的な機能による一時的な無効化でした。DNSレコードが実際に削除されていなくても、何らかの理由でAWSのチェック機能がレコードを確認できない場合にこのような事象が発生します。
+今回の問題は、**DNS移行時の古いレコード残存**が原因でした。独自ドメインメール設定のためのCloudflare移行時に、AWS SES関連の古いレコードを完全に削除しきれていなかったことで、AWSの検証プロセスが混乱していました。
 
-CloudTrailに履歴が残っていなかったことからも、手動での削除ではなく、DNS伝播やサーバー応答の一時的な問題が原因と考えられます。
+**重要なポイント**：
+- DNS移行時は旧プロバイダーのレコードを完全削除する
+- サードパーティサービス（AWS SES等）は複数DNSサーバーをチェックする
+- 権威サーバーの一貫性が重要
+- `._domainkey`などの特殊なサブドメインレコードを見落としやすい
 
-同様の問題に遭遇した場合は、まずRoute53（またはDNSプロバイダー）でレコードが存在することを確認し、必要に応じてレコードの再設定を行うことで解決できます。
+この経験により、DNS移行時の注意点と、AWS SESの検証プロセスについて深く理解することができました。同様の問題に遭遇した方の参考になれば幸いです。
 
 ## 参考資料
 
-1. [AWS公式: Troubleshooting DKIM problems in Amazon SES](https://docs.aws.amazon.com/ses/latest/dg/troubleshoot-dkim.html)
-2. [AWS re:Post: DKIM issue not sure if relevant](https://repost.aws/questions/QUfyHhcyHbSk24UOSuQ6qZGg/dkim-issue-not-sure-if-relevant)
-3. [AWS re:Post: DKIM not propagating after more than 5 days](https://repost.aws/questions/QUOFUiCPjDSwGwBIW2bmJa8Q/dkim-not-propagating-after-more-than-5-days)
-4. [MailWizz Forum: Amazon SES DKIM verification got deleted](https://forum.mailwizz.com/threads/amazon-ses-dkim-verification-got-deleted.2279/)
+1. [AWS公式: Creating and verifying identities in Amazon SES](https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#just-verify-domain-proc)
+2. [AWS公式: Troubleshooting DKIM problems in Amazon SES](https://docs.aws.amazon.com/ses/latest/dg/troubleshoot-dkim.html)
+3. [Cloudflare公式: Managing DNS records](https://developers.cloudflare.com/dns/manage-dns-records/)
+4. [AWS re:Post: DKIM issue not sure if relevant](https://repost.aws/questions/QUfyHhcyHbSk24UOSuQ6qZGg/dkim-issue-not-sure-if-relevant)
 5. [Stack Overflow: DKIM and DMARC problems with Route53](https://stackoverflow.com/questions/58885953/dkim-and-dmarc-problems-with-route53)
