@@ -42,6 +42,7 @@ We have been attempting to verify the DKIM setup of example.com for the last 3 d
 ### DNS移行の背景
 
 今回の問題の発端は、**独自ドメインメール**を設定するためにDNSプロバイダーをRoute53からCloudflareに移行したことでした。
+https://zenn.dev/zuzuzu/articles/cloudflare-email-setup
 
 独自ドメインメール設定の流れ：
 1. **メールサービスの検討** - Gmail、Outlook等でのカスタムドメイン利用
