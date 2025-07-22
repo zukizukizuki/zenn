@@ -2,7 +2,7 @@
 title: "【最新版】Claude Codeをより便利に使いたいあなたへ"
 emoji: "💭"
 type: "tech"
-topics: ["wsl", "claude", "ai", "windows", "setup"]
+topics: ["claude", "ai","setup"]
 published: true
 ---
 
