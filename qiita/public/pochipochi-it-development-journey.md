@@ -1,11 +1,13 @@
 ---
 title: "Flutter×Firebase×AdMobを使ったゲーミフィケーション学習アプリを作った話"
-emoji: "🎮"
-type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["flutter", "firebase", "admob", "個人開発", "モバイルアプリ"]
-published: true
+tags: ["flutter", "firebase", "admob", "個人開発", "モバイルアプリ"]
+private: false
+updated_at: ''
+id: null
+organization_url_name: null
+slide: false
+ignorePublish: false
 ---
-
 # はじめに
 
 インフラエンジニアとして日々AWSやTerraformと格闘している私ですが、個人開発で「ポチポチIT」というIT初学者向けのゲーミフィケーション学習アプリを開発しました。
