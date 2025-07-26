@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -74,6 +75,3 @@ jobs:
         uses: C-Naoki/zenn-qiita-sync@main
         with:
           qiita-token: ${{ secrets.QIITA_TOKEN }}
-          update-existing: true
-          cleanup-deleted: false
-          dry-run: false
