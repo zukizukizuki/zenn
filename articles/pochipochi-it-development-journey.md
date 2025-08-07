@@ -20,9 +20,13 @@ published: true
 - **オンラインサロンとかの重めの教材は飽和状態**
 - **自分が初学者の頃に気軽にコストをかけずにゲームみたいな感覚で勉強できるアプリがあったらいいなぁって思ってた**
 
-「ポチポチIT」は現在App Storeで公開中です。IT学習を楽しくゲーミフィケーションで進めたい方は、ぜひダウンロードしてみてください。
+「ポチポチIT」は現在App StoreとGoogle Play Storeで公開中です。IT学習を楽しくゲーミフィケーションで進めたい方は、ぜひダウンロードしてみてください。
+
+**App Store（iOS版）**：
 https://apps.apple.com/jp/app/%E3%83%9D%E3%83%81%E3%83%9D%E3%83%81it/id6747937302
-※Android版も鋭意製作中
+
+**Google Play Store（Android版）**：
+https://play.google.com/store/apps/details?id=com.pochipochiit.app
 
 # アプリの概要
 
@@ -138,12 +142,17 @@ AdMobの審査で必要なapp-ads.txtファイルを、自分のドメインに�
 
 ## 今後の展望
 
-- Android版のリリース
 - ソーシャル機能の拡充
 - 問題数の更なる追加
+- iOS/Android両プラットフォームでの継続的な改善
 
 ここまで読んでくれてありがとうございます。
 インフラエンジニアでも、やる気があればモバイルアプリは作れます。ぜひ挑戦してみてください！
-また度々になりますが「ポチポチIT」は現在App Storeで公開中です。
-IT学習を楽しくゲーミフィケーションで進めたい方は、ぜひダウンロードしてみてください。
+
+「ポチポチIT」は現在App StoreとGoogle Play Storeで公開中です。IT学習を楽しくゲーミフィケーションで進めたい方は、ぜひダウンロードしてみてください。
+
+**App Store（iOS版）**：
 https://apps.apple.com/jp/app/%E3%83%9D%E3%83%81%E3%83%9D%E3%83%81it/id6747937302
+
+**Google Play Store（Android版）**：
+https://play.google.com/store/apps/details?id=com.pochipochiit.app
