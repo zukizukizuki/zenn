@@ -137,15 +137,17 @@ aws cloudformation delete-stack --stack-name {StackName}
 cdk destroy {StackName}
 ```
 
-### 2. コードで削除ポリシーを指定
+### 2. リソース単位で RemovalPolicy を指定（スタック削除時の挙動制御）
 ```typescript
-const albStack = new AlbStack(app, `${stackPrefix}AlbV2`, {
-  // ...
-})
+import { RemovalPolicy, aws_s3 as s3 } from 'aws-cdk-lib';
 
-// 削除ポリシーを追加
-albStack.node.addMetadata('aws:cdk:deletion-policy', 'delete')
+// 例: S3 バケットをスタック削除時に確実に削除
+const bucket = new s3.Bucket(this, 'ArtifactsBucket', {
+  removalPolicy: RemovalPolicy.DESTROY,
+  autoDeleteObjects: true, // バケット内オブジェクトも削除
+});
 ```
+補足: スタック定義をコードから外しても自動削除は行われません。`cdk destroy` もしくは CloudFormation で明示的に削除してください。
 
 ### 3. 条件付きスタック作成 + 手動削除の組み合わせ
 ```typescript
