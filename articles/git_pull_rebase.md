@@ -2,7 +2,7 @@
 title: "git pull 実行時に「Need to specify how to reconcile divergent branches」エラーが発生した事例"
 emoji: "🔧"
 type: "tech"
-topics: [git, github , rebase , pull , ]
+topics: [git, github , rebase , pull , error]
 published: true
 ---
 
