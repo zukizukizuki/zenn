@@ -1,12 +1,10 @@
 ﻿---
 title: "オフラインイベント(1000人規模)のインフラをワンオペで完遂した話"
 emoji: "🎉"
-type: "tech" # tech: 技術記事 / idea: アイデア
+type: "tech" # tech: technical / idea: idea
 topics: ["aws", "インフラ", "terraform", "イベント運営"]
 published: true
 ---
-
-## はじめに
 参画先の企業で**来場者1000人規模のイベント**を開催することになり
 
 - インフラ
