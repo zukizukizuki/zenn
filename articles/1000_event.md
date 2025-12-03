@@ -2,7 +2,7 @@
 title: "1000人規模イベントのインフラをワンオペで完遂した話"
 emoji: "🎉"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["aws", "インフラ", "terraform", "イベント", "イベント運営"]
+topics: ["aws", "インフラ", "terraform", "イベント運営"]
 published: true
 ---
 
