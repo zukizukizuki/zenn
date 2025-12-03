@@ -1,4 +1,4 @@
----
+﻿---
 title: "オフラインイベント(1000人規模)のインフラをワンオペで完遂した話"
 emoji: "🎉"
 type: "tech" # tech: 技術記事 / idea: アイデア
@@ -54,18 +54,18 @@ published: true
 
 ```mermaid
 flowchart TD
-  User[利用者] --> WAF[WAF<br/>マネージドルール+レート制限]
-  WAF --> ALB[ALB<br/>HTTPSリダイレクト]
-  Route53[Route53 DNS] --> ALB
-  ALB --> ECS[ECS Fargate<br/>app + web + mysql client]
-  ECS --> RDS[(RDS MySQL<br/>本番はマルチAZ+レプリカ)]
-  ECS --> CW[CloudWatch Logs]
-  ECS --> Secret[Secrets Manager<br/>Parameter Store]
-  ALB --> S3Logs[S3<br/>ALBアクセスログ]
-  ECS -.-> ECRApp[ECR (app/web)<br/>スキャン on push]
-  ECS --> NAT[NAT Gateway]
-  NAT --> Internet[Internet]
-  RDS --> Backup[バックアップ保持<br/>環境ごとの日数]
+  User["利用者"] --> WAF["WAF<br/>マネージドルール+レート制限"]
+  WAF --> ALB["ALB<br/>HTTPSリダイレクト"]
+  Route53["Route53 DNS"] --> ALB
+  ALB --> ECS["ECS Fargate<br/>app + web + mysql client"]
+  ECS --> RDS[("RDS MySQL<br/>本番はマルチAZ+レプリカ")]
+  ECS --> CW["CloudWatch Logs"]
+  ECS --> Secret["Secrets Manager<br/>Parameter Store"]
+  ALB --> S3Logs["S3<br/>ALBアクセスログ"]
+  ECS -.-> ECRApp["ECR (app/web)<br/>スキャン on push"]
+  ECS --> NAT["NAT Gateway"]
+  NAT --> Internet["Internet"]
+  RDS --> Backup["バックアップ保持<br/>環境ごとの日数"]
 ```
 
 ### 構成のポイント
@@ -127,3 +127,4 @@ flowchart TD
 モジュール化と環境別ブランチの組み合わせにより、1000人規模の単発イベントインフラを**1ヶ月程度**で構築し、安全かつスピーディに仕上げられました。
 
 技術的な手応えは十分でしたが、次回はDBの選択肢を広げること、そして何より現場に行こうと思いました。
+
