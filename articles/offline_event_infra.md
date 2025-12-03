@@ -5,6 +5,7 @@ type: "tech" # tech: technical / idea: idea
 topics: ["aws", "インフラ", "terraform", "イベント運営"]
 published: true
 ---
+
 参画先の企業で**来場者1000人規模のイベント**を開催することになり
 
 - インフラ
