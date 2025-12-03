@@ -65,7 +65,7 @@ flowchart TD
   ECS -.-> ECRApp["ECR (app/web)<br/>スキャン on push"]
   ECS --> NAT["NAT Gateway"]
   NAT --> Internet["Internet"]
-  RDS --> Backup["バックアップ保持<br/>環境ごとの日数"]
+  RDS --> Backup["バックアップ保持<br/>(環境ごとの日数)"]
 ```
 
 ### 構成のポイント
